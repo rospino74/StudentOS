@@ -1,5 +1,5 @@
 # StudentOS
-StudentOS is a mini-social for student.
+StudentOS is a mini social-network for student.
 ## How work it?
 It work with PHP and MySQL Database.
 ## How can i install it?
