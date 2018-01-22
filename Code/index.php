@@ -160,3 +160,5 @@ header('Location: check.php');
 		<?
 	}
 ?>
+</body>
+</html>
