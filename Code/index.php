@@ -10,11 +10,11 @@ $theme_color="#53e300"; //default: #53e300
 	<meta name="Author" content="Marko">
 	<meta name="Description" content="Student Home" />
 	<meta name="MobileOptimized" content="176" />
-	<meta name="viewporta" content="width=50%, user-scalable=0, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="viewport" content="width=50%, user-scalable=0, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 	<title>Student | Home</title>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link href="icon-hires.png" rel="icon" sizes="192x192" />
-	<link href="icon.png" rel="icon" sizes="128x128" />
+	<link rel="shortcut icon" href="rsc/favicon.ico" type="image/x-icon">
+	<link href="rsc/icon-hires.png" rel="icon" sizes="192x192" />
+	<link href="rsc/icon.png" rel="icon" sizes="128x128" />
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Architects%20Daughter'>
@@ -24,7 +24,7 @@ $theme_color="#53e300"; //default: #53e300
 	body,h1 {font-family: "Raleway", sans-serif}
 	body, html {height: 100%}
 	.bgimg {
-		background-image: url('http://sqleoni.altervista.org/Extra/rsc/murales.jpg');
+		background-image: url('rsc/murales.jpg');
 		min-height: 100%;
 		background-position: center;
 		background-size: cover;
@@ -62,11 +62,6 @@ $theme_color="#53e300"; //default: #53e300
 		border: 2px <? echo $color;?> solid;
 		margin: 10%;
 		margin-top: 2%;
-	}
-	#img-desc {
-        height: 200px
-        width: 200px
-        border-radius: 100px;
 	}
 	.desc {
          text-align: center;
@@ -150,52 +145,8 @@ header('Location: check.php');
 	<a id="explore"></a>
     <h3 class="Student-font" style="color:<? echo $color;?>;">What is Student?</h3>
     <p>Student is a mini Social Network for students</p>
-    <br />
-    <br />
-    <!--a id="git"></a>
-	<h3 class="Student-font" style="color:<? echo $color; ?>;">Contribuisci a migliorare StudentOS!</h3>
-    <p>Insieme costruiamo un Internet <br /> pi&ugrave; bello &#128521;</p>
-    <button class="btn-color" onclick="window.location.replace('https://github.com/rospino74/StudentOS');">GitHub</button>
-    <br /-->
 </div>
-<div class="time" id="name">
-<p id="label" Style="text-align: center;">Al rilascio manca:</p>
-<br />
-<p id="demo" style="text-align: center;" ></p>
-
 <script>
-// Set the date< we're counting down to
-var countDownDate = new Date("jun 7, 2018  04:00:00").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-    // Get todays date and time
-    var now = new Date().getTime();
-    
-    // Find the distance between now an the count down date
-    var distance = countDownDate - now;
-    
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-    // Output the result in an element with id="demo"
-    document.getElementById("demo").innerHTML = days + " Days | " + hours + " Hours | "
-    + minutes + " Minutes | " + seconds + " Seconds";
-	
-    // If the count down is over, write some text 
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("demo").innerHTML = "<button onClick='" . "window.location.replace('check.php')"."'>Accedi</button></p>";
-
-document.getElementById("btn1").innerHTML = "<button class='btn-color' onClick=' " . "window.location.replace('check.php')"."'>Accedi</button></p>";
-        document.getElementById("label").innerHTML = "Time Out!";
-    }
-}, 1000);
-
   if ('serviceWorker' in navigator) {
     console.log("C'è un Service-Worker registrato?");
     navigator.serviceWorker.register('/service-worker.js')
@@ -206,7 +157,6 @@ document.getElementById("btn1").innerHTML = "<button class='btn-color' onClick='
       });
   }
 </script>
-</div>
 		<?
 	}
 ?>
