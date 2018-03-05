@@ -1,6 +1,6 @@
-#Install Guide
+# Install Guide
 
-##Setup DataBase
+## Setup DataBase
 * Go on folder `\admin\install.php`
 	* Insert the DB data for connect
 	* Press Next
