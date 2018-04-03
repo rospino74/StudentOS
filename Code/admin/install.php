@@ -91,7 +91,7 @@ case 2:
 if(!isset($_POST['add'])) { 
 	createclassroom($_POST['c_name']);
 } else if (!isset($_POST['finish'])) {
-	createclassroom($_POST['c_name']); 
+	createclassroom($_POST['c_name']);
 	header('Location: ../');
 } 
 break;
