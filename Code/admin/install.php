@@ -73,6 +73,20 @@ code {
 	</head>
 	<body>
 <?
+function createclassroom($name) {
+	require ../db.config.php;
+	$sql = 'CREATE TABLE '.$name.' (
+id int(4) NOT NULL auto_increment,
+date varchar(16) NOT NULL,
+title char(225) NOT NULL,
+contnent blob NOT NULL,
+author char(225) NOT NULL,
+ip_host char(26) NOT NULL,
+PRIMARY KEY (id),
+UNIQUE KEY id (id),
+KEY id_2 (id))';
+	mysql_query($sql);
+}
 switch($_GET['step']) {
 case 2:
 ?>
