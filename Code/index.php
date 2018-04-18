@@ -129,6 +129,7 @@ EOD;
 header('Location: check.php');
 };
 	} else {
+	/*
 		?>
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
 <div class="w3-display-topleft w3-padding-large w3-xlarge Student-font" style="color: <? echo $color;?>;"><img src="icon.png" title="StudentOS" alt="Gruppo" /> <b>StudentOS</b></div>
@@ -158,6 +159,8 @@ header('Location: check.php');
   }
 </script>
 		<?
+		*/
+		header('Location: check.php');
 	}
 ?>
 </body>

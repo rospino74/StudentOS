@@ -6,10 +6,10 @@
 	<meta name="Author" content="Marko">
 	<meta name="Description" content="Last post for <? echo $_GET['class']; ?>" />
 	<title><? echo $_GET['class']; ?> | Student</title>
-	<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-	<link href="icon-hires.png" rel="icon" sizes="192x192" />
-	<link href="icon.png" rel="icon" sizes="128x128" />
-	<link href='https://fonts.googleapis.com/css?family=Architects Daughter' rel='stylesheet'>
+	<link rel="shortcut icon" href="../rsc/favicon.ico" type="image/x-icon">
+	<link href="../rsc/icon-hires.png" rel="icon" sizes="192x192" />
+	<link href="../rsc/icon.png" rel="icon" sizes="128x128" />
+	<link href='https://fonts.googleapis.com/css?family=Architects%20Daughter' rel='stylesheet'>
 	<link href='../style/style.css' rel='stylesheet'>
     <!--link href='../style/media.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
@@ -18,7 +18,11 @@
 				$(".menu-item").toggle();
 		});
     </script-->
-	
+	<style>
+		.info {
+			text-align: right;
+		}
+	</style>
 </head>
 <body>
 <?
@@ -27,7 +31,7 @@ $classe = $_GET['class'];
 if($menu == '') {
 echo <<<EOD
 <div class="navbar">
-  <a href="../home.php" class="menu-item" id="home"><img style='display:none;' src="../icon_hires.png" />Student</a>
+  <a href="../home.php" class="menu-item" id="home"><img style='display:none;' src="../rsc/icon_hires.png" />Student</a>
   <a href="#last">Ultimo Post</a>
   <a href="../check.php" style="float:right;">Esci</a>
 </div>
@@ -38,12 +42,12 @@ switch($action) {
 //caso niente
 default:
 $sql = 'SELECT * FROM ' . $tabellanews;
-$query = mysql_query($sql) or die (mysql_error());
+$query = mysqli_query($connessione, $sql);
 echo '<div align="center" style="margin-top: 10%;"><h1 style="color: #33cc33; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
- while($data = mysql_fetch_array($query)) {
+ while($data = mysqli_fetch_array($query)) {
  $id = $data['id'];
  $time = $data['date'];
- $titolo = $data['title'];
+ $title = $data['title'];
  $contnent = $data['contnent'];
  $author = $data['author'];
 //ora inserisco la tabella
@@ -51,10 +55,10 @@ echo '<div align="center" style="margin-top: 10%;"><h1 style="color: #33cc33; fo
  echo <<<EOD
  <div class="content">
 	<div class="title">
-		<h3>$titolo</h3>
+		<h3>$title</h3>
 	</div>
     <div class="text">
-    	<p>$testo</p>
+    	<p>$contnent</p>
     </div>
 	<div class="info">
 		$author	$data
@@ -82,7 +86,7 @@ EOD;
  $title = $_POST['titolo'];	
  $text = $_POST['testo'];
  $sql = "INSERT INTO `".$dbname."`.`" . $classe . "` (`id`, `date`, `title`,`contnent`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$username."')";
- $query = mysql_query($sql) or die (mysql_error());
+ $query = mysqli_query($connessione, $sql);
  header('HTTP/1.0 200 Ok');
 };
 break;
