@@ -85,10 +85,49 @@ ip_host char(26) NOT NULL,
 PRIMARY KEY (id),
 UNIQUE KEY id (id),
 KEY id_2 (id))';
-	mysql_query($sql);
+	mysql_query($connessione, $sql);
+}
+function createaccount($user, $pw) {
+	require ../db.config.php;
+	$sql = 'CREATE TABLE user (
+	`id` int(3) NOT NULL AUTO_INCREMENT,
+	`role` char(45) NOT NULL,
+	`username` char(20) NOT NULL,
+	`email` char(255) NOT NULL,
+	`password` char(20) NOT NULL,
+	`ip` char(25) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `id` (`id`),
+	KEY `id_2` (`id`))';
+	mysqli_query($connessione, $sql);
+	msqli_query($connessione, "INSERT INTO `acesso` (`id`, `role`, `username`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', '', '".$pw."', '', '', '');");
 }
 switch($_GET['step']) {
-case 2:
+case  2:
+if(!isset($_POST['add'])) { 
+?>
+	<div class="form">
+	<h1>Creating Main User</h1>
+	<form action="" method="POST" autocomplete="off">	
+	<label for="user">Username</label>
+		<br />
+	<input type="text" name="user" placeholder="Admin Username" required/>
+		<br />
+		<label for="pw">Password</label>
+		<br />
+	<input type="password" name="pw" placeholder="Admin Password" required/>
+		<br />
+	<input type="submit" name="add" value="Create" style="float: left;"/>
+	<input type="reset"/>
+	</form>
+</div>
+<?
+} else {
+	createaccount($_POST['user'] $_POST['pw']);
+	header('Location: ?step=3');
+} 
+break;
+case 3:
 ?>
 <div class="form">
 <h1>Creating classroom</h1>
@@ -102,9 +141,9 @@ case 2:
 	</form>
 </div>
 <?
-if(!isset($_POST['add'])) { 
+if(isset($_POST['add'])) { 
 	createclassroom($_POST['c_name']);
-} else if (!isset($_POST['finish'])) {
+} else if (isset($_POST['finish'])) {
 	createclassroom($_POST['c_name']);
 	header('Location: ../');
 } 
@@ -164,10 +203,9 @@ $webmaster_mail = "'.$_POST["web_email"].'";
 
 //Mi connetto al DB
 
-$connessione = mysql_connect($db_server, $db_user, $db_pass) or die (mysql_error());
-$db = mysql_select_db($datab, $connessione) or die (mysql_error());
+$connessione = mysqli_connect($db_server, $db_user, $db_pass, $datab);
 '."?>";
-$dbconf = fopen('db.config.php','w');
+$dbconf = fopen('../db.config.php','w');
 fwrite($dbconf, $txt);
 header('Location: ?step=2');
 break;
