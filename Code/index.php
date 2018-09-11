@@ -128,40 +128,7 @@ EOD;
 } else {
 header('Location: check.php');
 };
-	} else {
-	/*
-		?>
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-<div class="w3-display-topleft w3-padding-large w3-xlarge Student-font" style="color: <? echo $color;?>;"><img src="icon.png" title="StudentOS" alt="Gruppo" /> <b>StudentOS</b></div>
-<div class="w3-display-middle">&nbsp; &nbsp;
-<h1 class="w3-jumbo w3-animate-top" style="text-align: center;">Student</h1>
-<h5 class="w3-animate-top Student-font" style="color:  black; text-align: center;"><strong>The Web doesn't connect only the machines<br />but also<br />the peapol</strong></h5>
-<br />
-<h6 class="w3-animate-top Student-font" style="color:  black; text-align: center;"><em>Tim Bernes Lee</em></h6>
-<hr class="w3-border-grey" style="margin: auto; width: 40%;" />
-<p class="w3-large w3-center" id="btn1"><button class="btn-color" onclick="window.location.replace('#explore'); ">Explore</button></p>
-</div>
-</div>
-<div class="desc w3-center">
-	<a id="explore"></a>
-    <h3 class="Student-font" style="color:<? echo $color;?>;">What is Student?</h3>
-    <p>Student is a mini Social Network for students</p>
-</div>
-<script>
-  if ('serviceWorker' in navigator) {
-    console.log("C'è un Service-Worker registrato?");
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function(reg){
-        console.log("Si, c'è!");
-      }).catch(function(err) {
-        console.error("No, non c'è! Errore: ", err);
-      });
-  }
-</script>
-		<?
-		*/
-		header('Location: check.php');
-	}
+	} else {require "check.php";}
 ?>
 </body>
 </html>

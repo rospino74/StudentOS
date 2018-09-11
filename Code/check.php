@@ -55,7 +55,7 @@ $job = $_GET['logout'];
   		$pw = $_POST['pw'];
   		$sql1 = "SELECT * FROM `acesso` WHERE `nome` = ".$user.";";
   		$userame = mysqli_fetch_array($sql1);
-  		$query = mysqli_query($connessione, "SELECT id FROM acesso WHERE nome='$user' and password='$pw'");
+  		$query = mysqli_query($connessione, "SELECT id FROM acesso WHERE nome='$user' and password='" . md5($pw) ."'");
   		/*$query = mysqli_query($sql);*/
   		$num = $query->num_rows;
   		if($num == 1) {
