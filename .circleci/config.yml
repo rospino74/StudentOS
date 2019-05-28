@@ -7,5 +7,5 @@ jobs:
       - image: circleci/php:7.3.5
     steps:
       - run:
-          command: php -r 'echo "Success!";'
+          command: php ../Code/index.php
           name: test php
