@@ -5,7 +5,8 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3.5
+
     steps:
       - run:
-          command: php ../Code/index.php
+          command: php Code/index.php
           name: test php
