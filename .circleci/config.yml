@@ -8,5 +8,5 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: ls
-          name: listing directory
+          command: echo $PATH
+          name: listing directory and checking path
