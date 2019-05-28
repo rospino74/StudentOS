@@ -8,5 +8,5 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: php index.php
-          name: test php
+          command: ls
+          name: listing directory
