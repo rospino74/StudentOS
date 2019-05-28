@@ -8,5 +8,5 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: echo $PATH
-          name: listing directory and checking path
+          command: build
+          name: trying to build
