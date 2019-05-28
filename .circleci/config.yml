@@ -3,14 +3,11 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
-executors:
-  standard:
-    docker:
-      - image: circleci/php:7.3.5
 
 jobs:
   build:
-    executor: standard
+    docker:
+      - image: circleci/php:7.3.5
     steps:
       - run:
           command: php echo "Test";
