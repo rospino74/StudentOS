@@ -7,5 +7,5 @@ jobs:
       - image: circleci/php:7.3.5
     steps:
       - run:
-          command: php echo "Test";
+          command: make test
           name: test circleci
