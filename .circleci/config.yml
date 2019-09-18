@@ -1,5 +1,4 @@
 version: 2
-
 #compilo
 jobs:
   build:
@@ -8,5 +7,17 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: build
-          name: trying to build
+          command: mkdir tmpdir && cd tmpdir
+          name: Making directory
+      - run:
+          command: git clone https://github.com/rospino74/StudentOS
+          name: Cloning repository
+      - run:
+          command: cd Code
+          name: Get into Code Folder
+      - run:
+          command: php index.php
+          name: Running index.php
+      - run:
+          command: php home.php
+          name: Running home.php
