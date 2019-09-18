@@ -86,38 +86,39 @@ $theme_color="#53e300"; //default: #53e300
 	}
 	</style>
 </head>
+<body>
 <div id="1" style="text-align: center;">
-	<h2 style="color: <? echo $color;?>;" class="Student-font">Welcome <? echo $user;?></h2>
-	<p class="Student-font">Seclect the classroom:</p>
-<select name='pagina' id='pagina'>
-<option selected="selected" disabled="disabled" value="">Classroom --</option>
-<optgroup label="Section E">
-<option value="1e"><b>Classroom 1 E<b/></option>
-<option value='2e'><b>Classroom 2 E</b></option>
-<option name="3e" value="3e"><b>Classroom 3 E</b></option>
-</optgroup>
-<optgroup label="Section M">
-<option value="1m">Classroom 1 M</option>
-<option value="2m">Classroom 2 M</option>
-<option value="3m">Classroom 3 M</option>
-</optgroup>
-<optgroup label="Section B">
-<option value="1b">Classroom 1 B</option>
-<option value="2b">Classroom 2 B</option>
-<option value="3b">Classroom 3 B</option>
-</optgroup>
-<optgroup label="Section F">
-<option value="1f">Classroom 1 F</option>
-</optgroup>
-</select>
-<br>
-<br>
+    <h2 style="color: <? echo $color;?>;" class="Student-font">Welcome <? echo $user;?></h2>
+    <p class="Student-font">Seclect the classroom:</p>
+    <select name='pagina' id='pagina'>
+        <option selected="selected" disabled="disabled" value="">Classroom --</option>
+        <optgroup label="Section E">
+            <option value="1e"><b>Classroom 1 E</b></option>
+			<option value='2e'><b>Classroom 2 E</b></option>
+			<option name="3e" value="3e"><b>Classroom 3 E</b></option>
+        </optgroup>
+        <optgroup label="Section M">
+            <option value="1m">Classroom 1 M</option>
+            <option value="2m">Classroom 2 M</option>
+            <option value="3m">Classroom 3 M</option>
+        </optgroup>
+        <optgroup label="Section B">
+            <option value="1b">Classroom 1 B</option>
+            <option value="2b">Classroom 2 B</option>
+            <option value="3b">Classroom 3 B</option>
+        </optgroup>
+        <optgroup label="Section F">
+            <option value="1f">Classroom 1 F</option>
+        </optgroup>
+    </select>
+    <br>
+    <br>
 </div>
-	<script>
-		var spinner = document.querySelector(".pagina");
-		spinner.addEventListener("change", function() {
-			window.location.href="classroom/"+spinner.value+".php";
-		});
-	</script>
+<script>
+    var spinner = document.querySelector(".pagina");
+    spinner.addEventListener("change", function() {
+        window.location.href = "classroom/" + spinner.value + ".php";
+    });
+</script>
 </body>
 </html>
