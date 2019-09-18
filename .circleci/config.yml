@@ -7,8 +7,11 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: git clone https://github.com/rospino74/StudentOS tmpdir
+          command: git clone https://github.com/rospino74/StudentOS tmpdir && cd tmpdir
           name: Cloning repository into tmpdir
+      - run:
+          command: ls
+          name: Listing files
       - run:
           command: cd tmpdir/Code
           name: Get into Code folder
