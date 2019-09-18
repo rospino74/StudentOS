@@ -17,4 +17,4 @@ jobs:
           name: Running index.php
       - run:
           command: cd tmpdir/Code && php check.php
-          name: Running home.php
+          name: Running check.php
