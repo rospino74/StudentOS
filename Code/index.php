@@ -1,4 +1,11 @@
 <?
+if($_COOKIE['logged'] == true) {
+		$user = $_COOKIE['username'];
+		if(!isset($user)){$user = $_GET['user'];};
+		setcookie(username, $user, 86395);
+} else {
+header('Location: check.php');
+};
 $color="#33CC33";
 $theme_color="#53e300"; //default: #53e300
 ?>
@@ -79,16 +86,8 @@ $theme_color="#53e300"; //default: #53e300
 	}
 	</style>
 </head>
-<?php
-	if($_COOKIE['logged'] == true) {
-		$user = $_COOKIE['username'];
-		if(!isset($user)){ $user = $_GET['user'];};
-		setcookie(username, $user, 86395);
-		$classe = $_POST['pagina'];
-		if(!isset($classe)) {
-		echo <<<EOD
 <div id="1" style="text-align: center;">
-	<h2 color: $colore ;" class="Student-font">Welcome $user</h2>
+	<h2 style="color: <? echo $color;?>;" class="Student-font">Welcome <? echo $user;?></h2>
 	<p class="Student-font">Seclect the classroom:</p>
 <select name='pagina' id='pagina'>
 <option selected="selected" disabled="disabled" value="">Classroom --</option>
@@ -114,12 +113,6 @@ $theme_color="#53e300"; //default: #53e300
 <br>
 <br>
 </div>
-EOD;
- };
-} else {
-header('Location: check.php');
-};
-?>
 	<script>
 		var spinner = document.querySelector(".pagina");
 		spinner.addEventListener("change", function() {
