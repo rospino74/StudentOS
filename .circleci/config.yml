@@ -7,14 +7,11 @@ jobs:
     working_directory: ~/project/Code
     steps:
       - run:
-          command: mkdir tmpdir && cd tmpdir
-          name: Making directory
+          command: git clone https://github.com/rospino74/StudentOS tmpdir
+          name: Cloning repository into tmpdir
       - run:
-          command: git clone https://github.com/rospino74/StudentOS
-          name: Cloning repository
-      - run:
-          command: cd Code
-          name: Get into Code Folder
+          command: cd tmpdir/Code
+          name: Get into Code folder
       - run:
           command: php index.php
           name: Running index.php
