@@ -115,7 +115,7 @@ $theme_color="#53e300"; //default: #53e300
     <br>
 </div>
 <script>
-    var spinner = document.querySelector(".pagina");
+    var spinner = document.querySelector("#pagina");
     spinner.addEventListener("change", function() {
         window.location.href = "classroom/" + spinner.value + ".php";
     });
