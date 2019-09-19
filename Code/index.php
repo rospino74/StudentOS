@@ -111,8 +111,6 @@ $theme_color="#53e300"; //default: #53e300
             <option value="1f">Classroom 1 F</option>
         </optgroup>
     </select>
-    <br>
-    <br>
 </div>
 <script>
     var spinner = document.querySelector("#pagina");
