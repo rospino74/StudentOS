@@ -1,6 +1,12 @@
 <?php
 $err = false;
+$job = $_GET['action'];
 
+if($job=="logout") {
+    setcookie("login", 0, time() - 36000);
+	setcookie("username", NULL, time() - 36000);
+}
+	
 	if(isset($_POST['user'])) {
 		$user = $_POST['user'];
   		$pw = $_POST['pw'];
@@ -61,16 +67,9 @@ $err = false;
     </style>
 </head>
 <body>
-<?php
-	$job = $_GET['logout'];
-	setcookie("login", 0, time() - 36000);
-	setcookie("username", NULL, time() - 36000);
-?>
 <div class="centrato">
 	<p style="text-align: center; font-size: 18pt; font-family: terminal, monaco, monospace; color: #3C3; font-weight: bold;">Accesso</p>
-<?	if(isset($job)) {
-		setcookie("login", 0, time() - 36000);
-		setcookie("username", NULL, time() - 36000);
+<?	if($job=="logout") {
         echo '<div class="logout">Logout eseguito con successo!</div>';
 	} else if($err) {
 		echo '<div class="err-login">Credenziali Errate!</div>';
