@@ -72,27 +72,28 @@ code {
 	</style>
 	</head>
 	<body>
-<?
+<?php
 function createclassroom($name) {
-	require ../db.config.php;
-	$sql = 'CREATE TABLE '.$name.' (
-id int(4) NOT NULL auto_increment,
-date varchar(16) NOT NULL,
-title char(225) NOT NULL,
-contnent blob NOT NULL,
-author char(225) NOT NULL,
-ip_host char(26) NOT NULL,
-PRIMARY KEY (id),
-UNIQUE KEY id (id),
-KEY id_2 (id))';
-	mysql_query($connessione, $sql);
+	require "../db.config.php";
+	$sql = "CREATE TABLE `$name` (
+  `id` int(4) NOT NULL,
+  `title` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `content` blob NOT NULL,
+  `date` date NOT NULL,
+  `ip` char(25) CHARACTER SET latin1 NOT NULL,
+  `author` char(20) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='posts for $name';
+
+INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');";
+	mysqli_query($connessione, $sql);
 }
 function createaccount($user, $pw) {
-	require ../db.config.php;
+	require "../db.config.php";
 	$sql = 'CREATE TABLE user (
 	`id` int(3) NOT NULL AUTO_INCREMENT,
 	`role` char(45) NOT NULL,
 	`username` char(20) NOT NULL,
+	`name` char(255) NOT NULL,
 	`email` char(255) NOT NULL,
 	`password` char(20) NOT NULL,
 	`ip` char(25) NOT NULL,
@@ -100,7 +101,7 @@ function createaccount($user, $pw) {
 	UNIQUE KEY `id` (`id`),
 	KEY `id_2` (`id`))';
 	mysqli_query($connessione, $sql);
-	msqli_query($connessione, "INSERT INTO `acesso` (`id`, `role`, `username`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', '', '".$pw."', '', '', '');");
+	mysqli_query($connessione, "INSERT INTO `acesso` (`id`, `role`, `username`, `name`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', 'Administrator', '', PASSWORD('" . $pw . "'), '', '', '');");
 }
 switch($_GET['step']) {
 case  2:
@@ -121,11 +122,12 @@ if(!isset($_POST['add'])) {
 	<input type="reset"/>
 	</form>
 </div>
-<?
+<?php
 } else {
-	createaccount($_POST['user'] $_POST['pw']);
+	createaccount($_POST['user'], $_POST['pw']);
 	header('Location: ?step=3');
 } 
+exit;
 break;
 case 3:
 ?>
@@ -140,50 +142,22 @@ case 3:
 	<input type="submit" name="finish" value="Finish" style="float: right; background-color: orange;"/>
 	</form>
 </div>
-<?
+<?php
 if(isset($_POST['add'])) { 
 	createclassroom($_POST['c_name']);
 } else if (isset($_POST['finish'])) {
 	createclassroom($_POST['c_name']);
 	header('Location: ../');
 } 
+exit;
 break;
 case 'end':
 echo '<div class="form"><p style="font-size: 18pt;">Student Online Application has been installed!</p></div>';
+exit;
 break;
-default:
-if(!isset($_POST['ok'])) { 
-?>
-<div class="form">
-<h1>Settings Pre-install</h1>
-	<form action="" method="POST" autocomplete="off">	
-	<label for="web_email">Email: </label>
-		<br />
-	<input type="email" name="web_email" placeholder="Webmaser Email" required />
-		<br />
-<label for="db_url">DB name</label>
-		<br />
-	<input type="text" name="db_name" placeholder="Name of DB" required />
-		<br />
-	<label for="db_user">Username DB</label>
-		<br />
-	<input type="text" name="db_user" placeholder="Username DataBase" required />
-		<br />
-	<label for="db_pass">Password DB</label>
-		<br />
-	<input type="text" name="db_pass" placeholder="Password DataBase" />
-		<br />
-	<label for="db_url">Url DB (http only)</label>
-		<br />
-	<input type="url" name="db_url" placeholder="Url DataBase (HTTP)" required />
-		<br />
-	<input type="submit" name="ok" value="Next" style="float: left;"/>
-	<input type="reset" value="Reset" style="float: right;"/>
-	</form>
-</div>
-<?php
-} else {
-$txt = "<?php".'
+}
+if(isset($_POST['ok'])) {
+	$txt = "<?php".'
 //1. generic info
 //domain url and path
 $domain = "'.$_SERVER["HTTP_HOST"].'";
@@ -208,9 +182,35 @@ $connessione = mysqli_connect($db_server, $db_user, $db_pass, $datab);
 $dbconf = fopen('../db.config.php','w');
 fwrite($dbconf, $txt);
 header('Location: ?step=2');
-break;
-};
-};
+exit;
+}
 ?>
+<div class="form">
+<h1>Settings Pre-install</h1>
+	<form action="" method="POST" autocomplete="off">	
+	<label for="web_email">Email: </label>
+		<br />
+	<input type="email" name="web_email" placeholder="Webmaser Email" required />
+		<br />
+	<label for="db_url">DB name</label>
+		<br />
+	<input type="text" name="db_name" placeholder="Name of DB" required />
+		<br />
+	<label for="db_user">Username DB</label>
+		<br />
+	<input type="text" name="db_user" placeholder="Username DataBase" required />
+		<br />
+	<label for="db_pass">Password DB</label>
+		<br />
+	<input type="text" name="db_pass" placeholder="Password DataBase" />
+		<br />
+	<label for="db_url">Url DB (http only)</label>
+		<br />
+	<input type="url" name="db_url" placeholder="Url DataBase (HTTP)" required />
+		<br />
+	<input type="submit" name="ok" value="Next" style="float: left;"/>
+	<input type="reset" value="Reset" style="float: right;"/>
+	</form>
+</div>
 </body>
 </html>
