@@ -14,7 +14,10 @@
 
                 to {opacity: 1;}
 }
-input[type=url] {
+input[type=url],
+input[type=text],
+input[type=password], 
+input[type=tel] {
     border: none;
     border-bottom: 1px solid #33cc33;
 	margin: 2% 0;
