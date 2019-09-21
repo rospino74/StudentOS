@@ -20,7 +20,7 @@ if($job == "logout") {
 			else:
 				$num = 0;
 			endif;
-
+ 
   		if($num == 1) {
 			
   			setcookie("logged_in", 1, time() + 86400);

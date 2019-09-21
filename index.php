@@ -102,8 +102,10 @@ $theme_color="#53e300"; //default: #53e300
             <option value="2b">Classroom 2 B</option>
             <option value="3b">Classroom 3 B</option>
         </optgroup>
-        <optgroup label="Section G">
-            <option value="2g">Classroom 2 G</option>
+        <optgroup label="Section C">
+			<option value="1c">Classroom 1 C</option>
+            <option value="2c">Classroom 2 C</option>
+            <option value="2g">Classroom 3 C</option>
         </optgroup>
     </select>
 </div>
