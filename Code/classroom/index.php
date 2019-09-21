@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="navbar">
-  <a href="../home.php" class="menu-item" id="home"><img style='display:none;' src="../rsc/icon_hires.png" />Student</a>
+  <a href="../" class="menu-item" id="home"><img style='display:none;' src="../rsc/icon_hires.png" />Student</a>
   <a href="#last">Ultimo Post</a>
   <a href="../check.php" style="float:right;">Esci</a>
 </div>
