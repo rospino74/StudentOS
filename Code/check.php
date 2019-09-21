@@ -12,16 +12,21 @@ if($job == "logout") {
 	if(isset($_POST['user'])) {
 		$user = $_POST['user'];
   		$pw = $_POST['pw'];
-  		$query = $connessione->query("SELECT count(id) as c, name FROM user WHERE 'username'='$user' and 'password'=PASSWORD('" . $pw . "')");
-			if($query != false)
-				$num = $query->num_rows;
-			else
+  		$query = $connessione->query("SELECT COUNT(id) as 'count', name FROM users WHERE `username` = '$user' and `password` = PASSWORD('$pw')");
+			
+			if($query != false):
+				$query = $query->fetch_assoc();
+				$num = $query['count'];
+			else:
 				$num = 0;
+			endif;
+ 
   		if($num == 1) {
-  			setcookie("login", 1, time() + 86400);
-  			setcookie("name", $query['Name'], time() + 86395);
+			
+  			setcookie("logged_in", 1, time() + 86400);
+  			setcookie("name", $query['name'], time() + 86395);
   			header('HTTP/1.1 200 OK');
- 			header('Location: index.php?user='.$user);
+ 			header('Location: index.php);
 			
 			exit;
 			

@@ -1,8 +1,6 @@
-<?
-if($_COOKIE['logged'] == true) {
-		$user = $_COOKIE['username'];
-		if(!isset($user)){$user = $_GET['user'];};
-		setcookie(username, $user, 86395);
+<?php
+if($_COOKIE['logged_in'] == true) {
+		$user = isset($_COOKIE['name']) ? $_COOKIE['name'] : null;
 } else {
 header('Location: check.php');
 };
@@ -74,9 +72,6 @@ $theme_color="#53e300"; //default: #53e300
          text-align: center;
          margin: 10%;
 	}
-	.btn-color {
-		background-color: <? echo $color;?>;
-	}
 	select {
 		padding: 16px 20px;
 		border: none;
@@ -88,7 +83,7 @@ $theme_color="#53e300"; //default: #53e300
 </head>
 <body>
 <div id="1" style="text-align: center;">
-    <h2 style="color: <? echo $color;?>;" class="Student-font">Welcome <? echo $user;?></h2>
+    <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($user) ? ", ".$user : "";?>!</h2>
     <p class="Student-font">Seclect the classroom:</p>
     <select name='pagina' id='pagina'>
         <option selected="selected" disabled="disabled" value="">Classroom --</option>
@@ -107,15 +102,17 @@ $theme_color="#53e300"; //default: #53e300
             <option value="2b">Classroom 2 B</option>
             <option value="3b">Classroom 3 B</option>
         </optgroup>
-        <optgroup label="Section F">
-            <option value="1f">Classroom 1 F</option>
+        <optgroup label="Section C">
+			<option value="1c">Classroom 1 C</option>
+            <option value="2c">Classroom 2 C</option>
+            <option value="2g">Classroom 3 C</option>
         </optgroup>
     </select>
 </div>
 <script>
     var spinner = document.querySelector("#pagina");
     spinner.addEventListener("change", function() {
-        window.location.href = "classroom/" + spinner.value + ".php";
+        window.location.href = "classroom/index.php?class=" + spinner.value;
     });
 </script>
 </body>

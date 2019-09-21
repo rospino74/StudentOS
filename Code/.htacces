@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^classroom/([0-9a-zA-Z]+)$ classrom/index.php?class=$1 [L]
+RewriteRule ^class/([0-9a-zA-Z]+)$ classrom/index.php?class=$1 [L]
