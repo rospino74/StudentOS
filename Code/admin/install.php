@@ -31,14 +31,18 @@ input[type=tel] {
 	-webkit-transition-property: border;
 	-webkit-transition-duration: 0.5s;
 }
-body {
-    margin: 0;
+html, body {
+	margin: 0;
 	padding: 0;
     background-color: black;
 	background-repeat: no-repeat;
 	font-family: "Comic Sans MS", cursive, sans-serif;
+	height: 100%;
+	width: 100%;
+}
+body {
 	display: grid;
-	grid-template-rows: 35% auto 35%;
+	grid-template-rows: 15% auto 15%;
 	grid-template-columns: 30% auto 30%;
 }
 div.form {
@@ -47,8 +51,7 @@ div.form {
     padding: 5%;
     border-radius: 25px;
     background-color: white;
-    height: 80%;
-	float: left;
+	text-align: center;
     animation-name: trasparenza;
     animation-duration: 0.5s;
 }
@@ -92,10 +95,16 @@ function createclassroom($name) {
 
 INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');
 INSERT INTO `classrooms` (`id`, `name`, `teachers`, `students`, `can_students_post`) VALUES (NULL, '$name', '', '', '1');";
-	mysqli_query($link, $sql);
+	
+	$query = $link->query( $sql );
+	
+	echo $query ? "" : $link->error;
 }
 function createAdmin($user, $pw) {
-	mysqli_query($link, "INSERT INTO `acesso` (`id`, `role`, `username`, `name`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', 'Administrator', '$webmaster_mail', PASSWORD('" . $pw . "'), '');");
+	require "../db.config.php";
+	$query = $link->query("INSERT INTO `users` (`id`, `role`, `username`, `name`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', 'Administrator', '$webmaster_mail', PASSWORD('" . $pw . "'), '');");
+	
+	echo $query ? "" : $link->error;
 }
 
 function createtables() {
@@ -148,14 +157,13 @@ if(!isset($_POST['add'])) {
 		<br />
 	<input type="password" name="pw" placeholder="Admin Password" required/>
 		<br />
-	<input type="submit" name="add" value="Create" style="float: left;"/>
-	<input type="reset"/>
+	<input type="submit" name="add" value="Create"/>
 	</form>
 </div>
 <?php
 } else {
 	createAdmin($_POST['user'], $_POST['pw']);
-	header('Location: ?step=3');
+	//header('Location: ?step=3');
 } 
 exit;
 break;
@@ -258,8 +266,8 @@ exit;
 		<br />
 	<input type="text" name="db_url" placeholder="Url DataBase" required />
 		<br />
-	<input type="submit" name="ok" value="Next" style="float: left;"/>
-	<input type="reset" value="Reset" style="float: right;"/>
+	<input type="submit" name="ok" value="Next"/>
+	<input type="reset" value="Reset"/>
 	</form>
 </div>
 </body>
