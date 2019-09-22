@@ -84,19 +84,27 @@ code {
 <?php
 function createclassroom($name) {
 	require "../db.config.php";
-	$sql = "CREATE TABLE `$name` (
-  `id` int(4) NOT NULL,
-  `title` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `content` blob NOT NULL,
-  `date` date NOT NULL,
-  `ip` char(25) CHARACTER SET latin1 NOT NULL,
-  `author` char(20) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='posts for $name';
+	$sql_1 = "CREATE TABLE `$name` (
+		`id` int(4) NOT NULL,
+		`title` varchar(255) CHARACTER SET latin1 NOT NULL,
+		`content` blob NOT NULL,
+		`date` date NOT NULL,
+		`ip` char(25) CHARACTER SET latin1 NOT NULL,
+		`author` char(20) COLLATE utf8_unicode_ci NOT NULL
+	) DEFAULT CHARSET=utf8 COMMENT='posts for $name';";
 
-INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');
-INSERT INTO `classrooms` (`id`, `name`, `teachers`, `students`, `can_students_post`) VALUES (NULL, '$name', '', '', '1');";
+$sql_2 = "INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');";
+$sql_3 = "INSERT INTO `classrooms` (`id`, `name`, `teachers`, `students`, `can_students_post`) VALUES (NULL, '$name', '', '', '1');";
 	
-	$query = $link->query( $sql );
+	$query = $link->query( $sql_1 );
+	
+	echo $query ? "" : $link->error;
+	
+	$query = $link->query( $sql_2 );
+	
+	echo $query ? "" : $link->error;
+	
+	$query = $link->query( $sql_3 );
 	
 	echo $query ? "" : $link->error;
 }
@@ -115,7 +123,7 @@ function createtables() {
 		`username` char(20) NOT NULL,
 		`name` char(255) NOT NULL,
 		`email` char(255) NOT NULL,
-		`password` char(20) NOT NULL,
+		`password` char(255) NOT NULL,
 		`ip` char(25) NOT NULL,
 		`session` varchar(255) NOT NULL,
 		PRIMARY KEY (`id`),
@@ -151,11 +159,11 @@ if(!isset($_POST['add'])) {
 	<form action="" method="POST" autocomplete="off">	
 	<label for="user">Username</label>
 		<br />
-	<input type="text" name="user" placeholder="Admin Username" required/>
+	<input type="text" name="user" placeholder="Admin Username" required />
 		<br />
 		<label for="pw">Password</label>
 		<br />
-	<input type="password" name="pw" placeholder="Admin Password" required/>
+	<input type="password" name="pw" placeholder="Admin Password" required />
 		<br />
 	<input type="submit" name="add" value="Create"/>
 	</form>
@@ -163,7 +171,7 @@ if(!isset($_POST['add'])) {
 <?php
 } else {
 	createAdmin($_POST['user'], $_POST['pw']);
-	//header('Location: ?step=3');
+	header('Location: ?step=3');
 } 
 exit;
 break;
@@ -174,17 +182,22 @@ case 3:
 	<form action="" method="POST" autocomplete="off">	
 	<label for="web_email">Name of Classroom: </label>
 		<br />
-	<input type="text" name="c_name" placeholder="Classroom name" required />
+	<input type="text" name="c_name" placeholder="Classroom name" />
 		<br />
-	<input type="submit" name="add" value="Add" style="float: left;"/>
-	<input type="submit" name="finish" value="Finish" style="float: right; background-color: orange;"/>
+	<input type="submit" name="add" value="Add" />
+	<input type="submit" name="finish" value="Finish" />
 	</form>
 </div>
 <?php
 if(isset($_POST['add'])) { 
-	createclassroom($_POST['c_name']);
+	if(isset($_POST['c_name']) || $_POST['c_name'] != "")
+		createclassroom($_POST['c_name']);
+	
 } else if (isset($_POST['finish'])) {
-	createclassroom($_POST['c_name']);
+	
+	if(isset($_POST['c_name']) || $_POST['c_name'] != "")
+		createclassroom($_POST['c_name']);
+	
 	header('Location: ../');
 } 
 exit;
