@@ -31,15 +31,15 @@ input[type=tel] {
 	-webkit-transition-property: border;
 	-webkit-transition-duration: 0.5s;
 }
-html, body {
+body {
     margin: 0;
 	padding: 0;
     background-color: black;
 	background-repeat: no-repeat;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 	display: grid;
-	grid-rows: 35% auto 35%;
-	grid-columns: 30% auto 30%;
+	grid-template-rows: 35% auto 35%;
+	grid-template-columns: 30% auto 30%;
 }
 div.form {
 	grid-row: 2;
