@@ -30,6 +30,7 @@
   <a href="#last">Ultimo Post</a>
   <a href="../check.php" style="float:right;">Esci</a>
 </div>
+<span id="last"></span>
 <?php
 include '../db.config.php';
 $classe = $_GET['class'];
@@ -37,8 +38,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 switch($action) {
 //caso niente
 default:
-$sql = 'SELECT * FROM ' . $classe;
-$query = mysqli_query($link, $sql);
+$sql = 'SELECT * FROM ' . $classe . "  ORDER BY `id` DESC";
+$query = $link->query( $sql );
 echo '<div align="center" style="margin-top: 10%;"><h1 style="color: #33cc33; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
  while($data = mysqli_fetch_array($query)) {
  $id = $data['id'];
@@ -87,6 +88,5 @@ EOD;
 break;
 }; //fine switch
 ?>
-<span id="last"></span>
 </body>
 </html>
