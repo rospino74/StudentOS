@@ -15,6 +15,6 @@ jobs:
       - run:
           command: cd tmpdir/Code && php index.php
           name: Running index.php
-#      - run:
-#          command: cd tmpdir/Code && php check.php
-#          name: Running check.php
+      - run:
+          command: cd tmpdir/Code/classroom && php index.php
+          name: Running classroom file
