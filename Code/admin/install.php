@@ -15,6 +15,7 @@
                 to {opacity: 1;}
 }
 input[type=url],
+input[type=email],
 input[type=text],
 input[type=password], 
 input[type=tel] {
@@ -89,35 +90,46 @@ function createclassroom($name) {
 
 INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');
 INSERT INTO `classrooms` (`id`, `name`, `teachers`, `students`, `can_students_post`) VALUES (NULL, '$name', '', '', '1');";
-	mysqli_query($connessione, $sql);
+	mysqli_query($link, $sql);
 }
-function createaccount($user, $pw) {
+function createAdmin($user, $pw) {
+	mysqli_query($link, "INSERT INTO `acesso` (`id`, `role`, `username`, `name`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', 'Administrator', '$webmaster_mail', PASSWORD('" . $pw . "'), '');");
+}
+
+function createtables() {
 	require "../db.config.php";
-	$sql = 'CREATE TABLE users (
-	`id` int(3) NOT NULL AUTO_INCREMENT,
-	`role` char(45) NOT NULL,
-	`username` char(20) NOT NULL,
-	`name` char(255) NOT NULL,
-	`email` char(255) NOT NULL,
-	`password` char(20) NOT NULL,
-	`ip` char(25) NOT NULL,
-	`session` varchar(255) NOT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `id` (`id`),
-	KEY `id_2` (`id`));
+	$sql_1 = "CREATE TABLE users (
+		`id` int(3) NOT NULL AUTO_INCREMENT,
+		`role` char(45) NOT NULL,
+		`username` char(20) NOT NULL,
+		`name` char(255) NOT NULL,
+		`email` char(255) NOT NULL,
+		`password` char(20) NOT NULL,
+		`ip` char(25) NOT NULL,
+		`session` varchar(255) NOT NULL,
+		PRIMARY KEY (`id`),
+		UNIQUE KEY `id` (`id`),
+		KEY `id_2` (`id`)
+	);";
 	
-	CREATE TABLE `classrooms` (
-  `id` int(11) NOT NULL COMMENT \'Classroom\'\'s id\',
-  `name` char(25) COLLATE utf16_bin NOT NULL COMMENT \'Classroom\'\'s name\',
-  `teachers` text COLLATE utf16_bin NOT NULL,
-  `students` text COLLATE utf16_bin NOT NULL,
-  `can_students_post` tinyint(1) NOT NULL DEFAULT 1
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`),
-  KEY `id_2` (`id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;';
-	mysqli_query($connessione, $sql);
-	mysqli_query($connessione, "INSERT INTO `acesso` (`id`, `role`, `username`, `name`, `email`, `password`, `ip`) VALUES ('1', 'administrator', '".$user."', 'Administrator', '$webmaster_mail', PASSWORD('" . $pw . "'), '');");
+	$sql_2 = "CREATE TABLE `classrooms` (
+		`id` int(11) NOT NULL AUTO_INCREMENT ,
+		`name` char(25) COLLATE utf16_bin NOT NULL ,
+		`teachers` text COLLATE utf16_bin NOT NULL,
+		`students` text COLLATE utf16_bin NOT NULL,
+		`can_students_post` tinyint(1) NOT NULL DEFAULT 1 ,
+		PRIMARY KEY (`id`),
+		UNIQUE KEY `id` (`id`),
+		KEY `id_2` (`id`)
+	);";
+	
+	$query = $link->query( $sql_1 );
+	
+	echo $query ? "" : $link->error;
+	
+	$query = $link->query( $sql_2 );
+	
+	echo $query ? "" : $link->error;
 }
 switch($_GET['step']) {
 case  2:
@@ -140,7 +152,7 @@ if(!isset($_POST['add'])) {
 </div>
 <?php
 } else {
-	createaccount($_POST['user'], $_POST['pw']);
+	createAdmin($_POST['user'], $_POST['pw']);
 	header('Location: ?step=3');
 } 
 exit;
@@ -177,8 +189,8 @@ if(isset($_POST['ok'])) {
 //1. generic info
 //domain url and path
 $domain = "'.$_SERVER["HTTP_HOST"].'";
-$path = "";
-$site = $domain . $path;
+$path[\'real\'] = "'.dirname(__DIR__).'";
+$path[\'server\'] = "'.dirname($_SERVER['PHP_SELF'], 2).'/";
 
 //2. info for connecting to DB 
 $time = date("D/d/m/Y H:i");
@@ -191,17 +203,32 @@ $db_user = "'.$_POST["db_user"].'";
 $db_pass = "'.$_POST["db_pass"].'";
 
 //name of DataBase
-$datab = "'.$_POST["db_name"].'";
+$db = "'.$_POST["db_name"].'";
 
 //email webmaster
 $webmaster_mail = "'.$_POST["web_email"].'";
 
 //Mi connetto al DB
 
-$connessione = mysqli_connect($db_server, $db_user, $db_pass, $datab);
+$link = mysqli_connect($db_server, $db_user, $db_pass, $db);
 '."?>";
+
+$apache_config = "
+#StudentOS
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase " . str_replace('\\', '/', dirname($_SERVER['PHP_SELF'], 2)) . "/
+RewriteRule ^class/([0-9a-zA-Z]+)$ classrom/index.php?class=$1 [L]
+</IfModule>";
+
 $dbconf = fopen('../db.config.php','w');
+$ap_conf = fopen('../.htaccess','a');
 fwrite($dbconf, $txt);
+fwrite($ap_conf, $apache_config);
+
+#creo le tabelle
+createtables();
+
 header('Location: ?step=2');
 exit;
 }
@@ -225,9 +252,9 @@ exit;
 		<br />
 	<input type="text" name="db_pass" placeholder="Password DataBase" />
 		<br />
-	<label for="db_url">Url DB (http only)</label>
+	<label for="db_url">Url DB</label>
 		<br />
-	<input type="url" name="db_url" placeholder="Url DataBase (HTTP)" required />
+	<input type="text" name="db_url" placeholder="Url DataBase" required />
 		<br />
 	<input type="submit" name="ok" value="Next" style="float: left;"/>
 	<input type="reset" value="Reset" style="float: right;"/>
