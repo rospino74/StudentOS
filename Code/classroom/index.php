@@ -38,7 +38,7 @@ switch($action) {
 //caso niente
 default:
 $sql = 'SELECT * FROM ' . $classe;
-$query = mysqli_query($connessione, $sql);
+$query = mysqli_query($link, $sql);
 echo '<div align="center" style="margin-top: 10%;"><h1 style="color: #33cc33; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
  while($data = mysqli_fetch_array($query)) {
  $id = $data['id'];
@@ -81,7 +81,7 @@ EOD;
  $title = $_POST['titolo'];	
  $text = $_POST['testo'];
  $sql = "INSERT INTO `".$dbname."`.`" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$username."')";
- $query = mysqli_query($connessione, $sql);
+ $query = mysqli_query($link, $sql);
  header('HTTP/1.0 200 Ok');
 };
 break;
