@@ -85,12 +85,15 @@ code {
 function createclassroom($name) {
 	require "../db.config.php";
 	$sql_1 = "CREATE TABLE `$name` (
-		`id` int(4) NOT NULL,
+		`id` int(4) NOT NULL AUTO_INCREMENT,
 		`title` varchar(255) CHARACTER SET latin1 NOT NULL,
 		`content` blob NOT NULL,
 		`date` date NOT NULL,
 		`ip` char(25) CHARACTER SET latin1 NOT NULL,
-		`author` char(20) COLLATE utf8_unicode_ci NOT NULL
+		`author` char(20) COLLATE utf8_unicode_ci NOT NULL,
+		PRIMARY KEY (`id`),
+		UNIQUE KEY `id` (`id`),
+		KEY `id_2` (`id`)
 	) DEFAULT CHARSET=utf8 COMMENT='posts for $name';";
 
 $sql_2 = "INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');";
