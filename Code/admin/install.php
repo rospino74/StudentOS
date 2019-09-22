@@ -4,7 +4,7 @@
 		<meta name="Author" content="Marko">
 		<meta name="theme-color" content="black">
 		<meta name="Description" content="Installing Student Online Application" />
-		<link rel="stylesheet" src="../style/style.css" />
+		<!--link rel="stylesheet" src="../style/style.css" /-->
 		<title>Install StudentOA</title>
 		<style>
 @import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:400,600i&subset=latin-ext');
@@ -31,17 +31,19 @@ input[type=tel] {
 	-webkit-transition-property: border;
 	-webkit-transition-duration: 0.5s;
 }
-body {
+html, body {
     margin: 0;
+	padding: 0;
     background-color: black;
 	background-repeat: no-repeat;
-	background-image: url('https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAziAAAAJDdkMzY3ZmI0LWY0M2ItNDA1Yy1hYmJiLTc0NDNlYWRhZDIyOA.jpg');
-    font-family: "Comic Sans MS", cursive, sans-serif;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	display: grid;
+	grid-rows: 35% auto 35%;
+	grid-columns: 30% auto 30%;
 }
 div.form {
-   /* margin-left: auto !important;
-   margin-right: auto !important;*/
-	margin: 10%;
+	grid-row: 2;
+	grid-column: 2;
     padding: 5%;
     border-radius: 25px;
     background-color: white;
@@ -52,7 +54,7 @@ div.form {
 }
 h1 {
     text-align: center;
-color: #33cc33;
+	color: #33cc33;
 }
 h5 {
     margin-top: 5%;
