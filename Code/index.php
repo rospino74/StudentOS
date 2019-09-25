@@ -11,23 +11,27 @@ $theme_color="#53e300"; //default: #53e300
 <html>
 <head>
     <meta  charset="utf-8">
-	<meta name="theme-color" content="<? echo $theme_color;?>">
+	<meta name="theme-color" content="<?php echo $theme_color;?>">
 	<meta name="Author" content="Marko">
 	<meta name="Description" content="Student Home" />
 	<meta name="MobileOptimized" content="176" />
 	<meta name="viewport" content="width=50%, user-scalable=0, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 	<title>Student | Home</title>
+	
 	<link rel="shortcut icon" href="rsc/favicon.ico" type="image/x-icon">
 	<link href="rsc/icon-hires.png" rel="icon" sizes="192x192" />
 	<link href="rsc/icon.png" rel="icon" sizes="128x128" />
+	
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Architects%20Daughter'>
-	<link rel="stylesheet" href="style/button.css">
+	
+	<link rel="stylesheet" href="style/navbar.css">
+	
 	<link rel="manifest" href="rsc/manifest.json">
 	<style>
 	body,h1 {font-family: "Raleway", sans-serif}
-	body, html {height: 100%}
+	body, html {margin: 0; padding: 0; margin-top: 10%;}
 	.bgimg {
 		background-image: url('rsc/murales.jpg');
 		min-height: 100%;
@@ -41,7 +45,7 @@ $theme_color="#53e300"; //default: #53e300
         color: black;
 	}
 	.text {
-		background-color: <? echo $color;?>;
+		background-color: <?php echo $color;?>;
 		height: 20%;
 		width: 40%;
 		opacity: 1;
@@ -55,7 +59,7 @@ $theme_color="#53e300"; //default: #53e300
 		font-family: 'Raleway';
 	}
 	a {
-		color: <? echo $color;?>;
+		color: <?php echo $color;?>;
 		font-variant: none;
 	}
 
@@ -64,7 +68,7 @@ $theme_color="#53e300"; //default: #53e300
 		font-variant: underline;
 	}
 	.time {
-		border: 2px <? echo $color;?> solid;
+		border: 2px <?php echo $color;?> solid;
 		margin: 10%;
 		margin-top: 2%;
 	}
@@ -76,12 +80,16 @@ $theme_color="#53e300"; //default: #53e300
 		padding: 16px 20px;
 		border: none;
 		border-radius: 7px;
-		background-color: #33cc33;
+		background-color: <?php echo $color;?>;
 		color: white;
 	}
 	</style>
 </head>
 <body>
+	<div class="navbar">
+		<a href="#" class="navbar-item navbar-icon" data-action="goto:home" rel="home"><img src="rsc/icon-hires.png" alt="Student"/></a>
+		<a href="check.php?action=logout" style="float:right;" class="navbar-item" data-action="action:quit">Esci</a>
+	</div>
 <div id="1" style="text-align: center;">
     <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($user) ? ", ".$user : "";?>!</h2>
     <p class="Student-font">Seclect the classroom:</p>
