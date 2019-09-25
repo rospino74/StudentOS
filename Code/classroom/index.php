@@ -10,7 +10,10 @@
 	<link href="../rsc/icon-hires.png" rel="icon" sizes="192x192" />
 	<link href="../rsc/icon.png" rel="icon" sizes="128x128" />
 	<link href='https://fonts.googleapis.com/css?family=Architects%20Daughter' rel='stylesheet'>
+	
 	<link href='../style/style.css' rel='stylesheet'>
+	<link href='../style/navbar.css' rel='stylesheet'>
+	
     <!--link href='../style/media.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script>
@@ -25,16 +28,18 @@
 	</style>
 </head>
 <body>
-<div class="navbar">
-  <a href="../" class="menu-item" id="home"><img style='display:none;' src="../rsc/icon_hires.png" />Student</a>
-  <a href="#last">Ultimo Post</a>
-  <a href="../check.php" style="float:right;">Esci</a>
-</div>
+	<div class="navbar">
+		<a href="../" class="navbar-item navbar-icon" data-action="goto:home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
+		<a href="#last" class="navbar-item">Ultimo Post</a>
+		<a href="../check.php?action=logout" style="float:right;" class="navbar-item" data-action="action:quit">Esci</a>
+	</div>
 <span id="last"></span>
 <?php
-include '../db.config.php';
+require '../db.config.php';
+
 $classe = $_GET['class'];
 $action = isset($_GET['action']) ? $_GET['action'] : null;
+
 switch($action) {
 //caso niente
 default:
