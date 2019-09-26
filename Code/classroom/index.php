@@ -57,7 +57,7 @@ default:
 $sql = 'SELECT * FROM ' . $classe . "  ORDER BY `id` DESC";
 $query = $link->query( $sql );
 echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Ultimi post per '.strtoupper($classe).'</h1></div>';
- while($data = mysqli_fetch_array($query)) {
+ while($data = $query->fetch_array()) {
  $id = $data['id'];
  $date = $data['date'];
  $title = $data['title'];

@@ -93,7 +93,7 @@ $theme_color="#53e300"; //default: #53e300
 	</div>
 <div id="1" style="text-align: center;">
     <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($name) ? ", ".$name : "";?>!</h2>
-    <p class="Student-font">Seclect the classroom:</p>
+    <p class="Student-font">Seclect the classroom</p>
     <select name='pagina' id='pagina'>
         <option selected="selected" disabled="disabled" value="">Classroom --</option>
         <!--optgroup label="Section E">
