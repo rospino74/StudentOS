@@ -1,8 +1,19 @@
+<?php
+if($_COOKIE['logged_in'] == true) {
+		$name = isset($_COOKIE['name']) ? $_COOKIE['name'] : null;
+		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
+} else {
+header('Location: ../check.php');
+};
+$color="#33CC33";
+$theme_color="#53e300"; //default: #53e300
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
 	<meta name="charset" value="utf-8">
-	<meta name="theme-color" content="#53e300">
+	<meta name="theme-color" content="<?php echo $theme_color;?>">
 	<meta name="Author" content="Marko">
 	<meta name="Description" content="Last posts for <?php echo $_GET['class']; ?>" />
 	<title><?php echo $_GET['class']; ?> | Student</title>
@@ -45,7 +56,7 @@ switch($action) {
 default:
 $sql = 'SELECT * FROM ' . $classe . "  ORDER BY `id` DESC";
 $query = $link->query( $sql );
-echo '<div align="center" style="margin-top: 10%;"><h1 style="color: #33cc33; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
+echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
  while($data = mysqli_fetch_array($query)) {
  $id = $data['id'];
  $date = $data['date'];
@@ -69,25 +80,25 @@ EOD;
  };
 break;
 //se a è addnews
-case'addnews':
+case'write':
 $invia = $_POST['invia'];
  if(!$invia) {
   echo <<<EOD
 <div class="content" style="text-align: center;">
 	<form action="" method="POST">
-			<label for="titolo" style="color: #33cc33; font-family: Architects Daughter;">Titolo</label><br />
+			<label for="titolo" style="color: $color; font-family: Architects Daughter;">Titolo</label><br />
             <input name="titolo" type="text" placeholder="Insert the title..."/><br /><br />
-            <label for="testo" style="color: #33cc33; font-family: Architects Daughter;">Testo</label><br />
-            <textarea name="testo" placeholder="Insert the text..." style="margin: 5%; width: 10em; height: 5em"></textarea><br />
-            <input name="invia" type="submit" value="Invia" />&nbsp;<input name="reset" type="reset" value="Reset Campi" style="cursor: not-allowed;"/>
+            <label for="testo" style="color: $color; font-family: Architects Daughter;">Testo</label><br />
+            <textarea name="testo" placeholder="Insert the text..."></textarea><br />
+            <input name="invia" type="submit" value="Invia" /><input name="reset" type="reset" value="Reset Campi" style="cursor: not-allowed;"/>
 	</form>
 </div>
 EOD;
 } else {
  $title = $_POST['titolo'];	
  $text = $_POST['testo'];
- $sql = "INSERT INTO `".$dbname."`.`" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$username."')";
- $query = mysqli_query($link, $sql);
+ $sql = "INSERT INTO `" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$name."')";
+ $query = $link->query($sql);
  header('HTTP/1.0 200 Ok');
 };
 break;
