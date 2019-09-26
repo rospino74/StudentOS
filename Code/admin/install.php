@@ -244,7 +244,7 @@ $apache_config = "
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase " . str_replace('\\', '/', dirname($_SERVER['PHP_SELF'], 2)) . "/
-RewriteRule ^classes/([^/]*)$ classroom/?class=$1 [L]
+RewriteRule ^classes/([^/]*)(:)([^/]*)$ classroom/?class=$1&action=$3 [L]
 </IfModule>";
 
 
