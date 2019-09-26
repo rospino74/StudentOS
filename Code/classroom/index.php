@@ -56,7 +56,7 @@ switch($action) {
 default:
 $sql = 'SELECT * FROM ' . $classe . "  ORDER BY `id` DESC";
 $query = $link->query( $sql );
-echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Ultimi post per '.$classe.'</h1></div>';
+echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Ultimi post per '.strtoupper($classe).'</h1></div>';
  while($data = mysqli_fetch_array($query)) {
  $id = $data['id'];
  $date = $data['date'];
@@ -95,11 +95,11 @@ $invia = $_POST['invia'];
 </div>
 EOD;
 } else {
- $title = $_POST['titolo'];	
- $text = $_POST['testo'];
- $sql = "INSERT INTO `" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$name."')";
- $query = $link->query($sql);
- header('HTTP/1.0 200 Ok');
+	$title = $_POST['titolo'];	
+	$text = $_POST['testo'];
+	$sql = "INSERT INTO `" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$data."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$name."')";
+	$query = $link->query($sql);
+	header('HTTP/1.0 200 Ok');
 };
 break;
 }; //fine switch
