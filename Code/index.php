@@ -1,6 +1,7 @@
 <?php
 if($_COOKIE['logged_in'] == true) {
-		$user = isset($_COOKIE['name']) ? $_COOKIE['name'] : null;
+		$name = isset($_COOKIE['name']) ? $_COOKIE['name'] : null;
+		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
 } else {
 header('Location: check.php');
 };
@@ -91,11 +92,11 @@ $theme_color="#53e300"; //default: #53e300
 		<a href="check.php?action=logout" style="float:right;" class="navbar-item" data-action="action:quit">Esci</a>
 	</div>
 <div id="1" style="text-align: center;">
-    <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($user) ? ", ".$user : "";?>!</h2>
+    <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($name) ? ", ".$name : "";?>!</h2>
     <p class="Student-font">Seclect the classroom:</p>
     <select name='pagina' id='pagina'>
         <option selected="selected" disabled="disabled" value="">Classroom --</option>
-        <optgroup label="Section E">
+        <!--optgroup label="Section E">
             <option value="1e"><b>Classroom 1 E</b></option>
 			<option value='2e'><b>Classroom 2 E</b></option>
 			<option name="3e" value="3e"><b>Classroom 3 E</b></option>
@@ -114,7 +115,22 @@ $theme_color="#53e300"; //default: #53e300
 			<option value="1c">Classroom 1 C</option>
             <option value="2c">Classroom 2 C</option>
             <option value="2g">Classroom 3 C</option>
-        </optgroup>
+        </optgroup-->
+		
+		<?php
+		
+		require "db.config.php";
+		$query = $link->query("SELECT `name` FROM `classrooms` WHERE `members` LIKE '%\"$username\"%';");
+	
+		echo $query ? "" : $link->error;
+		
+		while($c = $query->fetch_assoc())
+		{
+			echo "<option value=\"$c[name]\">Classroom " . strtoupper($c['name']) . "</option>";
+		}
+		
+		?>
+		
     </select>
 </div>
 <script>

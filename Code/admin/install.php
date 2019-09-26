@@ -97,7 +97,7 @@ function createclassroom($name) {
 	) DEFAULT CHARSET=utf8 COMMENT='posts for $name';";
 
 $sql_2 = "INSERT INTO `$name` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2019-06-19', '', 'Admin');";
-$sql_3 = "INSERT INTO `classrooms` (`id`, `name`, `teachers`, `students`, `can_students_post`) VALUES (NULL, '$name', '', '', '1');";
+$sql_3 = "INSERT INTO `classrooms` (`id`, `name`, `members`, `can_students_post`) VALUES (NULL, '$name', '".'{"teachers":["Admin"],"students":[]}'."', '1');";
 	
 	$query = $link->query( $sql_1 );
 	
@@ -127,6 +127,7 @@ function createtables() {
 		`name` char(255) NOT NULL,
 		`email` char(255) NOT NULL,
 		`password` char(255) NOT NULL,
+		`icon` blob NOT NULL,
 		`ip` char(25) NOT NULL,
 		`session` varchar(255) NOT NULL,
 		PRIMARY KEY (`id`),
@@ -137,8 +138,7 @@ function createtables() {
 	$sql_2 = "CREATE TABLE `classrooms` (
 		`id` int(11) NOT NULL AUTO_INCREMENT ,
 		`name` char(25) COLLATE utf16_bin NOT NULL ,
-		`teachers` text COLLATE utf16_bin NOT NULL,
-		`students` text COLLATE utf16_bin NOT NULL,
+		`members` blob COLLATE utf16_bin NOT NULL,
 		`can_students_post` tinyint(1) NOT NULL DEFAULT 1 ,
 		PRIMARY KEY (`id`),
 		UNIQUE KEY `id` (`id`),
