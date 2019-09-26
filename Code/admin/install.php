@@ -244,8 +244,10 @@ $apache_config = "
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase " . str_replace('\\', '/', dirname($_SERVER['PHP_SELF'], 2)) . "/
-RewriteRule ^class/([0-9a-zA-Z]+)$ classrom/index.php?class=$1 [L]
+RewriteRule ^classes/([^/]*)$ classroom/?class=$1 [L]
 </IfModule>";
+
+
 
 $dbconf = fopen('../db.config.php','w');
 $ap_conf = fopen('../.htaccess','a');
