@@ -1,8 +1,4 @@
-/* font: prompt*/
-@import url('https://fonts.googleapis.com/css?family=Prompt');
-
-/*Input style*/
-@import url('input.css');
+/*Box style*/
 .center {
     position: absolute;
     left: 0;
@@ -12,52 +8,21 @@
     font-size: 18px;
 }
 
-/*Menù style*/
-li.bg {
- background-color: #33cc33;
- color: white;
- font-family: Architects Daughter;
- font-size: 22px;
+/*Link Style*/
+a:not(.navbar-item) {
+	color: #33cc33;
+	text-decoration: none;
+	border: none;
+	border-bottom: 3.5px #33cc33 dotted;
+	padding: 2px;
 }
-
-ul.lista {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    height: 10%
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
+a:visited:not(.navbar-item) {
+	color: #99ff99;
+	border-bottom-color:#99ff99;
 }
-.exit {float: right;}
-li {
-    float: left;
-}
-
-li a{
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 5%;
-    text-decoration: none;
-    font-family: Architects Daughter;
- 	font-size: 22px;
-    -moz-transition-property: background-color;
-	-moz-transition-duration: 0.5s;
-    -o-transition-property: background-color;
-	-o-transition-duration: 0.5s;
-    -webkit-transition-property: background-color;
-	-webkit-transition-duration: 0.5s;
-    transition-property: background-color;
-	transition-duration: 0.5s;
-}
-
-li:not(.bg) a:hover:not(.bg) {
-    background-color: #111
-    ;
+a:hover:not(.navbar-item) {
+	color: #22aa22;
+	border-bottom-color: #22aa22;
 }
 
 /*Other style*/
@@ -103,9 +68,9 @@ div.centrato {
 /*	Style for post	*/
 /*content*/
 .content {
-	margin: 10% 2%;
-	border-radius: 25px;
-    padding: 5%;
+	margin: 5% 2%;
+	border-radius: 20px;
+    padding: 2%;
 	color: black;
     border: 1px #eee solid;
     text-align: center;
@@ -113,7 +78,7 @@ div.centrato {
 /*Title*/
 .title {
 	color: #3c3;
-    font-family: Architects Daughter;
+    font-family: 'Architects Daughter';
     font-weight: bold;
     text-align: center;
 }
@@ -124,13 +89,13 @@ div.centrato {
     font-size: 22px;
     text-align:center;
 }
+/*Info*/
+.info {
+	font-family: 'Prompt';
+}
+
 /*comment*/
 .comment {
 	margin-top: 5%;
     border-top: #eee solid 1px;
-}
-
-@font-face {
-	font-family: Pricedown;
-	src:url(../rsc/pricedown bl.ttf);
 }

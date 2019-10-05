@@ -24,10 +24,10 @@ input[type=password]:focus,
 input[type=url]:focus,
 input[type=tel]:focus,
 textarea:focus {
-    box-shadow: 0 0 0 .2rem #55ee55;
+    box-shadow: 0 0 0 .2rem #99ff99;
 }
 	
-input[type=reset] {
+input[type=reset], button.btn-negative {
 	background-color: #ff0000; /* Red */
     border: 1px solid #ff0000;
     color: white;
@@ -46,11 +46,11 @@ input[type=reset] {
     transition-property: background-color , color;
 	transition-duration: 0.5s , 0.5s;
 }
-input[type=reset]:hover {
+input[type=reset]:hover, button.btn-negative:hover {
 	background-color: white; /* white */
     color: #ff0000;
 }    
-input[type=submit] {
+input[type=submit], button.btn-positive {
 	background-color: #33cc33; /* Green */
 	border: 1px solid #33cc33;
     color: white;
@@ -71,7 +71,7 @@ input[type=submit] {
 	transition-duration: 0.5s , 0.5s;
     
 }
-input[type=submit]:hover {
+input[type=submit]:hover, button.btn-positive:hover {
 	background-color: white; /* white */
     color: #33cc33;
 }

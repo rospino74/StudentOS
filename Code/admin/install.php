@@ -4,8 +4,10 @@
 		<meta name="Author" content="Marko">
 		<meta name="theme-color" content="black">
 		<meta name="Description" content="Installing Student Online Application" />
-		<!--link rel="stylesheet" src="../style/style.css" /-->
-		<title>Install StudentOA</title>
+		
+		<link rel="shortcut icon" href="../rsc/icon.png" type="image/x-icon">
+		
+		<title>Student | Install page</title>
 		<style>
 @import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:400,600i&subset=latin-ext');
 @keyframes trasparenza {
@@ -244,7 +246,7 @@ $apache_config = "
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase " . str_replace('\\', '/', dirname($_SERVER['PHP_SELF'], 2)) . "/
-RewriteRule ^classes/([^/]*)(:)([^/]*)$ classroom/?class=$1&action=$3 [L]
+RewriteRule ^classes/([A-z0-9+]*)([:]?)([a-z+]*)$ classroom/?class=$1&action=$3 [L]
 </IfModule>";
 
 

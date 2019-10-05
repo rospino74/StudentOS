@@ -2,11 +2,10 @@
 
 <div class="navbar">
 		<a href="../" class="navbar-item navbar-icon" data-action="goto:home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
-		<a href="#last" class="navbaritem">Ultimo Post</a>
+		<a href="#last" class="navbar-item">Ultimo Post</a>
 		<a href="../check.php?action=logout" style="float:right;" class="navbar-item" data-action="action:quit">Esci</a>
 	</div>
 */
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 html {scroll-behavior: smooth;}
 
 .navbar {
@@ -37,6 +36,8 @@ html {scroll-behavior: smooth;}
 	float: left;
 	text-align: center;
 	padding: 1.3% 2%;
+	
+	cursor: pointer;
 	
 	transition: .2s;
 	
