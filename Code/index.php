@@ -4,7 +4,7 @@ if($_COOKIE['logged_in'] == true) {
 		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
 		$role = isset($_COOKIE['role']) ? $_COOKIE['role'] : null;
 } else {
-header('Location: check.php');
+	header('Location: check.php?ref=' . urlencode($_SERVER['REQUEST_URI']) . '&action=old-session');
 };
 $color="#33CC33";
 $theme_color="#53e300"; //default: #53e300

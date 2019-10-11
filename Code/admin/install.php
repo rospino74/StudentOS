@@ -213,33 +213,37 @@ exit;
 break;
 }
 if(isset($_POST['ok'])) {
-	$txt = "<?php".'
-//1. generic info
-//domain url and path
+	$txt ='
+<?php
+//1. Path info
+
+//Your app path here
 $domain = "'.$_SERVER["HTTP_HOST"].'";
 $path[\'real\'] = "'.dirname(__DIR__).'";
 $path[\'server\'] = "'.dirname($_SERVER['PHP_SELF'], 2).'/";
 
-//2. info for connecting to DB 
+//2. General stuff
+
 $time = date("D/d/m/Y H:i");
 
-//server of DB
+//Webmaster\'s email
+$webmaster_mail = "'.$_POST["web_email"].'";
+
+//3. Database info 
+//Mysql Url
 $db_server = "'.$_POST["db_url"].'";
 
-//user and password DataBase
+//User and password
 $db_user = "'.$_POST["db_user"].'";
 $db_pass = "'.$_POST["db_pass"].'";
 
-//name of DataBase
+//DB Name
 $db = "'.$_POST["db_name"].'";
 
-//email webmaster
-$webmaster_mail = "'.$_POST["web_email"].'";
-
-//Mi connetto al DB
+//Link to MySql
 
 $link = mysqli_connect($db_server, $db_user, $db_pass, $db);
-'."?>";
+?>';
 
 $apache_config = "
 #StudentOS

@@ -10,7 +10,7 @@ back.forEach((item) => {
 
 quit.forEach((item) => {
 	item.addEventListener("click", (e) => {
-		window.location.href = "../check.php";
+		window.location.href = "../check.php?action=logout";
 	});
 });
 

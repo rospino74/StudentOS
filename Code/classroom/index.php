@@ -4,7 +4,7 @@ if($_COOKIE['logged_in'] == true) {
 		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
 		$role = isset($_COOKIE['role']) ? $_COOKIE['role'] : null;
 } else {
-header('Location: ../check.php');
+	header('Location: ../check.php?ref=' . urlencode($_SERVER['REQUEST_URI']) . '&action=old-session');
 };
 $color="#33CC33";
 $theme_color="#53e300"; //default: #53e300
@@ -19,13 +19,14 @@ $theme_color="#53e300"; //default: #53e300
 	<meta name="Description" content="Last posts for <?php echo strtoupper($_GET['class']); ?>" />
 	<title>Student | <?php echo $_GET['class']; ?></title>
 	
-	<link rel="shortcut icon" href="../rsc/icon.png" type="image/x-icon">
+	<link href="../rsc/icon.png" type="image/x-icon"  rel="shortcut icon">
 	<link href="../rsc/icon-hires.png" rel="icon" sizes="192x192" />
 	<link href="../rsc/icon.png" rel="icon" sizes="128x128" />
 	
-	<link href='../style/style.css' rel='stylesheet'>
+	<link href='../style/style.css'  rel='stylesheet'>
+	<link href='../style/input.css'  rel='stylesheet'>
 	<link href='../style/navbar.css' rel='stylesheet'>
-	<link rel="stylesheet" href="../style/font.css">
+	<link href='../style/font.css'   rel='stylesheet'>
 	
     <!--link href='../style/media.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>

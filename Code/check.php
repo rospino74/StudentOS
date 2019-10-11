@@ -31,14 +31,19 @@ if($job == "logout") {
 			setcookie("role", $query['role'], time() + 86395);
 			
   			header('HTTP/1.1 200 OK');
- 			header('Location: index.php');
+			
+			if(isset($_GET['ref']))
+				header("Location: $_GET[ref]");
+ 			else
+				header('Location: index.php');
 			
 			exit;
 			
   			//se sbagliato
   		} else {
   			header('HTTP/1.1 403 Forbidden');
-			$err = true;
+			$err = "wrong";
+			$job = null;
 		}
 	}
 ?>
@@ -88,8 +93,12 @@ if($job == "logout") {
 	<p style="text-align: center; font-size: 18pt; font-family: terminal, monaco, monospace; color: #3C3; font-weight: bold;">Accesso</p>
 <?php	if($job == "logout") {
         echo '<div class="info-logout">Successfully logged out!</div>';
-	} else if($err == true || $job == "error") {
+	} else if($err == "error" || $job == "error") {
 		echo '<div class="info-error">Login failed!</div>';
+	} else if($err == "wrong") {
+		echo '<div class="info-error">Username/Password wrong!</div>';
+	} else if($err == "old" || $job == "old-session") {
+		echo '<div class="info-error">Session expired!</div>';
 	}
 ?>
     <form action="" method="POST" class="centrato">
