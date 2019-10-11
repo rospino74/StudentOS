@@ -12,21 +12,22 @@ jobs:
             MYSQL_PASSWORD: passw0rd
 
     working_directory: ~/project/
-    steps:      
+    steps:
+      - checkout
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting for MySQL to be ready
           command: |
             for i in `seq 1 10`;
             do
-              nc -z 127.0.0.1 3306 && echo MySql is ready! && exit 0
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
               echo -n .
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
       - run:
-          name: Install MySQL CLI;
-          command: sudo apt-get install default-mysql-client
+          name: Install MySQL CLI
+          command: sudo apt install -y mysql-client
            
       #cloning code
       - run:
@@ -36,7 +37,7 @@ jobs:
       #adding data
       - run:
           command: mysql -h 127.0.0.1 -u root studentoa < tmpdir/Code/admin/builder.sql
-          name: Selecting Database; Adding data
+          name: Adding data to db
           
       #renaming config file
       - run:
