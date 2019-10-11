@@ -12,9 +12,7 @@ jobs:
           MYSQL_PASSWORD: passw0rd
 
     working_directory: ~/project/
-    steps:
-      - checkout
-      
+    steps:      
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting for MySQL to be ready
