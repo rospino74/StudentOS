@@ -13,7 +13,7 @@ jobs:
 
     working_directory: ~/project/
     steps:
-      -checkout
+      - checkout
       
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
