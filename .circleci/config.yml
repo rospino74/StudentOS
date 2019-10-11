@@ -5,11 +5,11 @@ jobs:
     docker:
       - image: circleci/php:7.3.5
       - image: circleci/mysql:8.0.4
-      environment:
-          MYSQL_ROOT_PASSWORD: ''
-          MYSQL_DATABASE: studentoa
-          MYSQL_USER: user
-          MYSQL_PASSWORD: passw0rd
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
 
     working_directory: ~/project/
     steps:      
