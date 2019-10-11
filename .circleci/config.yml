@@ -4,17 +4,51 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3.5
-    working_directory: ~/project/Code
+      - image: circleci/mysql:8.0.4
+      environment:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: studentoa
+          MYSQL_USER: user
+          MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
     steps:
+      -checkout
+      
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySql is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Install MySQL CLI;
+          command: sudo apt-get install default-mysql-client
+           
+      #cloning code
       - run:
           command: git clone https://github.com/rospino74/StudentOS tmpdir
           name: Cloning repository into tmpdir
+          
+      #adding data
       - run:
-          command: cd tmpdir/Code && ls
-          name: Listing files
+          command: mysql -h 127.0.0.1 -u root studentoa < tmpdir/Code/admin/builder.sql
+          name: Selecting Database; Adding data
+          
+      #renaming config file
+      - run:
+          command: cd tmpdir/Code/admin && mv template.db.config.php db.config.php
+          name: Renaming config file
+          
+      #testing
       - run:
           command: cd tmpdir/Code && php index.php
-          name: Running index.php
+          name: Running index file
       - run:
-          command: cd tmpdir/Code/classroom && php index.php
-          name: Running classroom file
+          command: cd tmpdir/Code/classroom && php index.php?class=class1
+          name: Running index file
