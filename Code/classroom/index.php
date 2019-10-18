@@ -1,8 +1,11 @@
 <?php
-if($_COOKIE['logged_in'] == true) {
-		$name = isset($_COOKIE['name']) ? $_COOKIE['name'] : null;
-		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : null;
-		$role = isset($_COOKIE['role']) ? $_COOKIE['role'] : null;
+session_start();
+if($_COOKIE['logged_in'] == true && $_COOKIE['session'] == session_id()) {
+	require_once("../db.config.php");
+	require_once("../utils/getUserInfo.php");
+	
+	$name = getUserInfo("name", session_id(), $link);
+	$role = getUserInfo("role", session_id(), $link);
 } else {
 	header('Location: ../check.php?ref=' . urlencode($_SERVER['REQUEST_URI']) . '&action=old-session');
 };
@@ -51,8 +54,6 @@ $theme_color="#53e300"; //default: #53e300
 	</div>
 <span id="last"></span>
 <?php
-require '../db.config.php';
-
 $classe = $_GET['class'];
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 

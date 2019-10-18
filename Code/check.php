@@ -1,20 +1,19 @@
 <?php
-require "db.config.php";
+require_once("db.config.php");
 
 $err = false;
 $job = isset($_GET['action']) ? $_GET['action'] : null;
 
 if($job == "logout") {
+	session_destroy();
     setcookie("logged_in", 0, time() - 36000);
-	setcookie("name", NULL, time() - 36000);
-	setcookie("username", NULL, time() - 36000);
-	setcookie("role", NULL, time() - 36000);
+	setcookie("session", NULL, time() - 36000);
 }
 	
 	if(isset($_POST['user'])) {
 		$user = $_POST['user'];
   		$pw = $_POST['pw'];
-  		$query = $link->query("SELECT COUNT(id) as 'count', name, username, role FROM users WHERE `username` = '$user' and `password` = PASSWORD('$pw')");
+  		$query = $link->query("SELECT COUNT(id) as 'count', id FROM users WHERE `username` = '$user' and `password` = PASSWORD('$pw')");
 			
 			if($query != false):
 				$query = $query->fetch_assoc();
@@ -25,10 +24,14 @@ if($job == "logout") {
  
   		if($num == 1) {
 			
-  			setcookie("logged_in", 1, time() + 86400);
-  			setcookie("name", $query['name'], time() + 86395);
-			setcookie("username", $query['username'], time() + 86395);
-			setcookie("role", $query['role'], time() + 86395);
+			session_start();
+			
+			$query = $link->query("UPDATE `users` SET `session`='" . session_id() . "' WHERE `id` = " . $query['id'] . ";");
+			
+			if($query != false){
+				setcookie("logged_in", 1, time() + 86400);
+				setcookie("session", session_id(), time() + 86395);
+			}
 			
   			header('HTTP/1.1 200 OK');
 			
