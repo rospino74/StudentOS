@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3.5
-      - image: circleci/mysql:8.0.4
+      - image: circleci/mysql
         environment:
             MYSQL_ROOT_PASSWORD: ''
             MYSQL_DATABASE: studentoa
@@ -27,7 +27,14 @@ jobs:
             echo Failed waiting for MySQL && exit 1
       - run:
           name: Install MySQL CLI
-          command: sudo apt install -y mysql-client
+          command: |
+            sudo rm /etc/apt/sources.list
+            echo "deb http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
+            echo "deb-src http://archive.debian.org/debian/ jessie-backports main" | sudo tee -a /etc/apt/sources.list
+            echo "Acquire::Check-Valid-Until false;" | sudo tee -a /etc/apt/apt.conf.d/10-nocheckvalid
+            echo 'Package: *\nPin: origin "archive.debian.org"\nPin-Priority: 500' | sudo tee -a /etc/apt/preferences.d/10-archive-pin
+            sudo apt-get update
+            echo "Now install mysql: " & sudo apt install -y mysql-client
            
       #cloning code
       - run:
