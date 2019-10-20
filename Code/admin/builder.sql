@@ -6,7 +6,7 @@ CREATE TABLE users (
 	`name` char(255) NOT NULL,
 	`email` char(255) NOT NULL,
 	`password` char(255) NOT NULL,
-	`icon` blob NOT NULL,
+	`icon` blob DEFAULT NULL,
 	`ip` char(25) NOT NULL,
 	`session` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`),
