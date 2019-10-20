@@ -8,7 +8,7 @@ CREATE TABLE users (
 	`password` char(255) NOT NULL,
 	`icon` blob DEFAULT NULL,
 	`ip` char(25) NOT NULL,
-	`session` varchar(255) NOT NULL,
+	`session` char(255) NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `id` (`id`),
 	KEY `id_2` (`id`)
@@ -26,7 +26,7 @@ CREATE TABLE `classrooms` (
 /*Classroom 1 table*/
 CREATE TABLE `class1` (
 	`id` int(4) NOT NULL AUTO_INCREMENT,
-	`title` varchar(255) NOT NULL,
+	`title` char(255) NOT NULL,
 	`content` blob NOT NULL,
 	`date` date NOT NULL,
 	`ip` char(25) NOT NULL,
