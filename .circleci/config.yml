@@ -78,4 +78,4 @@ workflows:
   home_and_class:
     jobs:
       - home
-      - class
+      - classroom
