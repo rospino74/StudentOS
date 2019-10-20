@@ -16,7 +16,8 @@ jobs:
       - checkout
       
       - run:
-          command: ls
+          name: listing
+          command: ls Code
       
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
