@@ -13,7 +13,6 @@ jobs:
 
     working_directory: ~/project/
     steps:
-      - checkout
       - run:
             name: Updating Apt Index
             command: sudo apt-get update
