@@ -8,7 +8,7 @@ CREATE TABLE users (
 	`password` char(255) NOT NULL,
 	`icon` blob DEFAULT NULL,
 	`ip` char(25) NOT NULL,
-	`session` char(255) NOT NULL,
+	`session` char(255) DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `id` (`id`),
 	KEY `id_2` (`id`)
