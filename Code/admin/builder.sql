@@ -44,4 +44,4 @@ INSERT INTO `users`
 
 /*Post for classroom 1*/
 INSERT INTO `class1` (`id`, `title`, `content`, `date`, `ip`, `author`) VALUES(0, 'Errore', 0x51756573746120706167696e61206e6f6e20636f6e7469656e65206e756c6c61206d692064697370696163652e2e2e20506f73746120706572207072696d6f212056697375616c697a7a61206c6120677569646120e29e9c203c6120687265663d222e2e2f61646d696e2f67756964652e706870223e7064663c2f613e, '2000-1-1', '', 'Admin');
-INSERT INTO `classrooms` (`id`, `name`, `members`, `can_students_post`) VALUES (NULL, 'class1', '{"teachers":["Admin"],"students":[]}', '1');";
+INSERT INTO `classrooms` (`id`, `name`, `members`, `can_students_post`) VALUES (NULL, 'class1', '{"teachers":["Admin"],"students":[]}', '1');
