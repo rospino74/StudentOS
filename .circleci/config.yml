@@ -69,9 +69,9 @@ jobs:
       - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
-            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
-            echo "Now create database config: " & cd Code/admin && mv template.db.config.php db.config.php
+            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client && echo "Success!"
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql && echo "Success!"
+            echo "Now create database config: " & cd Code/admin && mv template.db.config.php db.config.php && echo "Success!"
             
       #testing index.php
       - run:
@@ -106,11 +106,11 @@ jobs:
       - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " && sudo apt-get update && sudo apt-get install mysql-client
+            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
       - run:
           name: Importing Data
           command: |      
-            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql && echo "Success!"
   install:
     docker:
       - image: circleci/php:7.3.5
