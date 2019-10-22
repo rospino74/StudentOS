@@ -21,7 +21,7 @@ jobs:
       
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
-          name: Waiting for MySQL to be ready
+          name: Waiting MySQL
           command: |
             for i in `seq 1 10`;
             do
@@ -57,7 +57,7 @@ jobs:
       - checkout
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
-          name: Waiting for MySQL to be ready
+          name: Waiting MySQL
           command: |
             for i in `seq 1 10`;
             do
@@ -78,9 +78,60 @@ jobs:
           command: cd Code/classroom && php-cgi -f index.php class=class1
           name: Running classroom page
           
+#installer
+  load_sql:
+    docker:
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
+      - run:
+          name: Importing Data
+          command: |      
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+  install:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing install.php
+      - run:
+          command: cd Code/admin/ && php install.php
+          name: Running install page
+          
 workflows:
   version: 2
   home_and_class:
     jobs:
       - home
-      - classroom
+      - classroom:
+          requires:
+            - home
+  installer:
+    jobs:
+      - install
+      - load_sql:
+          requires:
+            - install
