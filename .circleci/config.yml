@@ -30,9 +30,10 @@ jobs:
           command: sudo apt-get update
       - run:
           name: Installing MySQL
-          command: |
-            echo "Now install mysql: "
-            sudo apt-get install mysql-client php3.7-mysql
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: sudo apt-get install php3.7-mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -73,9 +74,10 @@ jobs:
           command: sudo apt-get update
       - run:
           name: Installing MySQL
-          command: |
-            echo "Now install mysql: "
-            sudo apt-get install mysql-client php3.7-mysql
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: sudo apt-get install php3.7-mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -116,9 +118,10 @@ jobs:
           command: sudo apt-get update
       - run:
           name: Installing MySQL
-          command: |
-            echo "Now install mysql: "
-            sudo apt-get install mysql-client php3.7-mysql
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: sudo apt-get install php3.7-mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -160,13 +163,10 @@ jobs:
           command: sudo apt-get update
       - run:
           name: Setting Up MySQL
-          command: |
-            echo "Now install mysql: "
-            sudo apt-get install mysql-client
+          command: sudo apt-get install mysql-client
       - run:
           name: Importing Data
-          command: |      
-            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql & echo "Success!"
+          command: mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
   install:
     docker:
       - image: circleci/php:7.3.5
