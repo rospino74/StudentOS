@@ -26,11 +26,12 @@ jobs:
             done
             echo Failed waiting for MySQL && exit 1
       - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now upgrade system: " & sudo apt-get update
-            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql & echo "Success!"
-            /*echo "Now install mysql support for php: " & sudo apt install php3.7-mysql && echo "Success!"*/
+            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -64,11 +65,12 @@ jobs:
             done
             echo Failed waiting for MySQL && exit 1
       - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now upgrade system: " & sudo apt-get update
-            echo "Now install mysql: " & sudo apt-get install mysql-client & echo "Success!"
-            echo "Now install mysql support for php: " & sudo apt install php7.3-mysql && echo "Success!"
+            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -102,12 +104,14 @@ jobs:
             done
             echo Failed waiting for MySQL && exit 1
       - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get update & sudo apt-get install mysql-client & echo "Success!"
-            echo "Now install mysql support for php: " & sudo apt install php7.3-mysql && echo "Success!"
-            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql & echo "Success!"
-            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php & echo "Success!"
+            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql & echo "Success!"
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
       #testing index.php
       - run:
@@ -140,10 +144,13 @@ jobs:
             done
             echo Failed waiting for MySQL && exit 1
       - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now upgrade system: " & sudo apt-get update
-            echo "Now install mysql: " & sudo apt-get install mysql-client & echo "Success!"
+            echo "Now install mysql: " & sudo apt-get install mysql-client
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
       - run:
           name: Importing Data
           command: |      
