@@ -76,7 +76,7 @@ jobs:
 #installer
   load_sql:
     docker:
-      - image: circleci/php
+      - image: circleci/php:7.3.5
       - image: circleci/mysql:5.7
         environment:
             MYSQL_ROOT_PASSWORD: ''
