@@ -33,7 +33,7 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install php3.7-mysql
+          command: sudo apt-get install pdo-mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -77,7 +77,7 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install php3.7-mysql
+          command: sudo apt-get install pdo-mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -121,7 +121,7 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install php3.7-mysql
+          command: sudo apt-get install pdo-mysql
       - run:
           name: Setting Up MySQL
           command: |
