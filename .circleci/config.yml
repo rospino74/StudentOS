@@ -29,7 +29,7 @@ jobs:
           name: Setting Up MySQL
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client & echo -n "Success!"
-            echo "Now install mysql support for php: " & sudo apt-get install php7.3-mysqli && echo -n "Success!"
+            echo "Now install mysql support for php: " & sudo apt install php7.3-mysqli && echo -n "Success!"
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -66,7 +66,7 @@ jobs:
           name: Setting Up MySQL
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client & echo -n "Success!"
-            echo "Now install mysql support for php: " & sudo apt-get install php7.3-mysqli && echo -n "Success!"
+            echo "Now install mysql support for php: " & sudo apt install php7.3-mysqli && echo -n "Success!"
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -103,7 +103,7 @@ jobs:
           name: Setting Up MySQL
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client & echo -n "Success!"
-            echo "Now install mysql support for php: " & sudo apt-get install php7.3-mysqli && echo -n "Success!"
+            echo "Now install mysql support for php: " & sudo apt install php7.3-mysqli && echo -n "Success!"
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql & echo "Success!"
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php & echo "Success!"
             
