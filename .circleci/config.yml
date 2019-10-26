@@ -33,7 +33,9 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install pdo-mysql
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -77,7 +79,9 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install pdo-mysql
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
       - run:
           name: Setting Up MySQL
           command: |
@@ -121,7 +125,9 @@ jobs:
           command: sudo apt-get install mysql-client
       - run:
           name: Installing PHP driver
-          command: sudo apt-get install pdo-mysql
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
       - run:
           name: Setting Up MySQL
           command: |
