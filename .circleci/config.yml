@@ -30,7 +30,7 @@ jobs:
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
-            echo "Now create database config: " & cd Code/admin & mv template.db.config.php ../db.config.php
+            echo "Now create database config: " & cd Code/admin & mv template.db.config.php Code/db.config.php
             
       #testing index.php
       - run:
@@ -66,7 +66,7 @@ jobs:
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client & echo "Success!"
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql & echo "Success!"
-            echo "Now create database config: " & cd Code/admin && mv template.db.config.php ../db.config.php & echo "Success!"
+            echo "Now create database config: " & cd Code/admin && mv template.db.config.php Code/db.config.php & echo "Success!"
             
       #testing index.php
       - run:
