@@ -62,6 +62,7 @@ switch($action) {
 default:
 echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Last post for '.strtoupper($class).'</h1></div>';
 
+require_once("db.config.php");
 
 $query = $link->prepare("SELECT * FROM $class ORDER BY `date` DESC");
 
