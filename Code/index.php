@@ -106,6 +106,8 @@ $theme_color="#53e300"; //default: #53e300
         <option selected="selected" disabled="disabled" value="">Classroom --</option>
 		
 		<?php
+		require_once("db.config.php");
+		
 		$query = $link->prepare("SELECT `name` FROM `classrooms` WHERE `members` LIKE '%\"$username\"%';");
 		echo $query->execute() ? "" : $link->errorInfo;
 		
