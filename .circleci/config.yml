@@ -30,12 +30,48 @@ jobs:
           command: |
             echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
-            echo "Now create database config: " & cd Code/admin & mv template.db.config.php Code/db.config.php
+            echo "Now create database config: " & cd Code/admin && mv template.db.config.php Code/db.config.php
             
       #testing index.php
       - run:
           command: cd Code && php index.php
           name: Running home page
+          
+  check:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout      
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " & cd Code/admin && mv template.db.config.php Code/db.config.php
+            
+      #testing index.php
+      - run:
+          command: cd Code && php check.php
+          name: Running login page
 
   classroom:
     docker:
@@ -123,9 +159,11 @@ workflows:
   home_and_class:
     jobs:
       - home
+      - check
       - classroom:
           requires:
             - home
+            - check
   installer:
     jobs:
       - install
