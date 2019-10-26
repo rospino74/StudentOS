@@ -29,9 +29,13 @@ jobs:
           name: Upgrading System
           command: sudo apt-get update
       - run:
+          name: Installing MySQL
+          command: |
+            echo "Now install mysql: "
+            sudo apt-get install mysql-client php3.7-mysql
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -68,13 +72,17 @@ jobs:
           name: Upgrading System
           command: sudo apt-get update
       - run:
+          name: Installing MySQL
+          command: |
+            echo "Now install mysql: "
+            sudo apt-get install mysql-client php3.7-mysql
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
-      #testing index.php
+      #testing check.php
       - run:
           command: cd Code && php check.php
           name: Running login page
@@ -107,9 +115,13 @@ jobs:
           name: Upgrading System
           command: sudo apt-get update
       - run:
+          name: Installing MySQL
+          command: |
+            echo "Now install mysql: "
+            sudo apt-get install mysql-client php3.7-mysql
+      - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get install mysql-client php3.7-mysql & echo "Success!"
             echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
             echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
             
@@ -149,8 +161,8 @@ jobs:
       - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get install mysql-client
-            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now install mysql: "
+            sudo apt-get install mysql-client
       - run:
           name: Importing Data
           command: |      
