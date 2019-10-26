@@ -13,12 +13,7 @@ jobs:
 
     working_directory: ~/project/
     steps:
-      - checkout
-      
-      - run:
-          name: listing
-          command: ls Code
-      
+      - checkout      
       - run:
       # Our primary container isn't MYSQL so run a sleep command until it's ready.
           name: Waiting MySQL
@@ -106,7 +101,8 @@ jobs:
       - run:
           name: Setting Up MySQL
           command: |
-            echo "Now install mysql: " & sudo apt-get update && sudo apt-get install mysql-client
+            echo "Now upgrade system: " & sudo apt-get update
+            echo "Now install mysql: " & sudo apt-get install mysql-client
       - run:
           name: Importing Data
           command: |      
