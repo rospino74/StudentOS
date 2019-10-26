@@ -100,17 +100,16 @@ $theme_color="#53e300"; //default: #53e300
 		<a style="float:right;" class="navbar-item" href="check.php?action=logout">Sign Out <i class="fas fa-sign-out-alt"></i></a>
 	</div>
 <div id="1" style="text-align: center;">
-    <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($name) ? ", ".$name : "";?>!</h2>
+    <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($name) ? ", $name" : "";?>!</h2>
     <p>Select the classroom</p>
     <select name='pagina' id='pagina'>
         <option selected="selected" disabled="disabled" value="">Classroom --</option>
 		
 		<?php
-		$query = $link->query("SELECT `name` FROM `classrooms` WHERE `members` LIKE '%\"$username\"%';");
-	
-		echo $query ? "" : $link->error;
+		$query = $link->prepare("SELECT `name` FROM `classrooms` WHERE `members` LIKE '%\"$username\"%';");
+		echo $query->execute() ? "" : $link->errorInfo;
 		
-		while($c = $query->fetch_assoc())
+		while($c = $query->fetch(PDO::FETCH_ASSOC))
 		{
 			echo "<option value=\"$c[name]\">Classroom " . strtoupper($c['name']) . "</option>";
 		}

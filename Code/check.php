@@ -13,11 +13,13 @@ if($job == "logout") {
 	if(isset($_POST['user'])) {
 		$user = $_POST['user'];
   		$pw = $_POST['pw'];
-  		$query = $link->query("SELECT COUNT(id) as 'count', id FROM users WHERE `username` = '$user' and `password` = PASSWORD('$pw')");
+  		$query = $link->prepare("SELECT COUNT(id) as 'count', id FROM users WHERE `username` = ? and `password` = PASSWORD(?)");
 			
-			if($query != false):
-				$query = $query->fetch_assoc();
-				$num = $query['count'];
+			if($query->execute([$user, $pw]) != false):
+				$result = $query->fetch(PDO::FETCH_ASSOC);
+				
+				$num = $result['count'];
+				
 			else:
 				$num = 0;
 			endif;
@@ -26,11 +28,14 @@ if($job == "logout") {
 			
 			session_start();
 			
-			$query = $link->query("UPDATE `users` SET `session`='" . session_id() . "' WHERE `id` = " . $query['id'] . ";");
+			$query = $link->prepare("UPDATE `users` SET `session`= ? WHERE `id` = ?");
 			
-			if($query != false){
+			if($query->execute([session_id(), $result['id']]) != false){
 				setcookie("logged_in", 1, time() + 86400);
 				setcookie("session", session_id(), time() + 86395);
+			} else {
+				$err = "error";
+				return;
 			}
 			
   			header('HTTP/1.1 200 OK');
@@ -41,7 +46,6 @@ if($job == "logout") {
 				header('Location: index.php');
 			
 			exit;
-			
   			//se sbagliato
   		} else {
   			header('HTTP/1.1 403 Forbidden');

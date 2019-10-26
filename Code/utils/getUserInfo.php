@@ -1,15 +1,19 @@
 <?php
 	function getUserInfo( $what, $session , $link ) {
 		
-		if(strpos($what, 'password') !== false || strpos($what, 'session') !== false)
+		$whitelist = array('name', 'username', 'icon', 'role', 'email');
+
+		if(array_search($what, $whitelist) === false)
 			return false;
 		
-		$query = $link->query("SELECT `".$link->real_escape_string($what)."` AS 'return' FROM users WHERE `session` = '".$link->real_escape_string($session)."' LIMIT 1;")->fetch_assoc();
+		$query = $link->prepare("SELECT `$what` AS 'return' FROM users WHERE `session` = ? LIMIT 1;");
 		
-		if($query == false)
+		if($query->execute([$session]) == false)
 			return false;
 		
-		return $query['return'];
+		$result = $query->fetch(PDO::FETCH_ASSOC);
 		
+		return $result['return'];
+
 	}
 ?>

@@ -15,7 +15,7 @@ $webmaster_mail = "test@test.com";
 
 //3. Database info 
 //Mysql Url
-$db_server = "localhost";
+$db_server = "127.0.0.1";
 
 //User and password
 $db_user = "root";
@@ -26,5 +26,5 @@ $db = "studentoa";
 
 //Link to MySql
 
-$link = mysqli_connect($db_server, $db_user, $db_pass, $db);
+$link = new PDO("mysql:dbname=$db;host=$db_server", $db_user, $db_pass);
 ?>

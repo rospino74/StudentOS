@@ -54,16 +54,21 @@ $theme_color="#53e300"; //default: #53e300
 	</div>
 <span id="last"></span>
 <?php
-$classe = $_GET['class'];
+$class = $_GET['class'];
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
 switch($action) {
 //caso niente
 default:
-$sql = 'SELECT * FROM ' . $classe . "  ORDER BY `id` DESC";
-$query = $link->query( $sql );
-echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Ultimi post per '.strtoupper($classe).'</h1></div>';
- while($data = $query->fetch_array()) {
+echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Last post for '.strtoupper($class).'</h1></div>';
+
+
+$query = $link->prepare("SELECT * FROM $class ORDER BY `date` DESC");
+
+if($query->execute() == false)
+	break;
+
+while($data = $query->fetch(PDO::FETCH_ASSOC)) {
 	$tmp_date = explode("-", $data['date']);
 	 
 	$id = $data['id'];
@@ -90,26 +95,37 @@ EOD;
 break;
 //se a è addnews
 case'write':
-$invia = isset($_POST['invia']) ? $_POST['invia'] : false;
- if(!$invia) {
-  echo <<<EOD
+$invia = isset($_POST['send']) ? $_POST['send'] : false;
+ if($invia) {
+	$title = $_POST['title'];	
+	$text = $_POST['text'];
+	$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`, `author`) VALUES (". rand() .", CURRENT_DATE, :title, :text, '".$_SERVER['REMOTE_ADDR']."', :author)";
+	
+	$query = $link->prepare( $sql );
+	
+	try{
+		if(!$query->execute([':title' => $title, ':text' => $text, ':author' => $name])) throw new PDOException("Database error: " . json_encode($query->errorInfo()));
+	}
+	catch (PDOException $e) {
+		header("HTTP/1 500 Database Error");
+		echo 'Execution failed: ' . $e->getMessage();
+		
+		break;
+	}
+	header('HTTP/1.0 200 Ok');
+	header('Location: ' . $class);
+};
+echo <<<EOD
 <div class="content" style="text-align: center; margin-top: 5%;">
 	<form action="" method="POST">
-			<label for="titolo" style="color: $color; font-family: Architects Daughter;">Titolo</label><br />
-            <input name="titolo" type="text" placeholder="Insert the title..."/><br />
-            <label for="testo" style="color: $color; font-family: Architects Daughter;">Testo</label><br />
-            <textarea name="testo" placeholder="Insert the text..." style="margin-bottom: 15px;" style="height: 50%; width: 50%;"></textarea><br />
-            <input name="invia" type="submit" value="Invia" style="margin-right: 25px;"/><button data-action="back" class="btn-negative">Indietro</button>
+			<label for="title" style="color: $color; font-family: Architects Daughter;">Title</label><br />
+            <input name="title" type="text" placeholder="Insert the title..."/><br />
+            <label for="text" style="color: $color; font-family: Architects Daughter;">Text</label><br />
+            <textarea name="text" placeholder="Insert the text..." style="margin-bottom: 15px;" style="height: 50%; width: 50%;"></textarea><br />
+            <input name="send" type="submit" value="Submit" style="margin-right: 25px;"/><button data-action="back" class="btn-negative">Indietro</button>
 	</form>
 </div>
 EOD;
-} else {
-	$title = $_POST['titolo'];	
-	$text = $_POST['testo'];
-	$sql = "INSERT INTO `" . $classe . "` (`id`, `date`, `title`,`content`, `ip_host`, `author`) VALUES (NULL, '".$time."', '".$title."', '".$text."', '".$_SERVER['REMOTE_ADDR']."', '".$name."')";
-	$query = $link->query($sql);
-	header('HTTP/1.0 200 Ok');
-};
 break;
 }; //fine switch
 ?>
