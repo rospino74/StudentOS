@@ -60,7 +60,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 switch($action) {
 //caso niente
 default:
-echo '<div align="center" style="margin-top: 10%;"><h1 style="color: '.$color.'; font-family: Architects Daughter;">Last post for '.strtoupper($class).'</h1></div>';
+echo '<h1 style="color: '.$color.'; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for '.strtoupper($class).'</h1>';
 
 require_once("../db.config.php");
 
