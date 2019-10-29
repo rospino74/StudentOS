@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("db.config.php");
 
 $err = false;
@@ -26,8 +27,6 @@ if($job == "logout") {
  
   		if($num == 1) {
 			
-			session_start();
-			
 			$query = $link->prepare("UPDATE `users` SET `session`= ? WHERE `id` = ?");
 			
 			if($query->execute([session_id(), $result['id']]) != false){
@@ -48,7 +47,7 @@ if($job == "logout") {
 			exit;
   			//se sbagliato
   		} else {
-  			header('HTTP/1.1 403 Forbidden');
+  			header('HTTP/1.1 401 Unauthorized');
 			$err = "wrong";
 			$job = null;
 		}
@@ -98,14 +97,18 @@ if($job == "logout") {
 <body>
 <div class="centrato">
 	<p style="text-align: center; font-size: 18pt; font-family: terminal, monaco, monospace; color: #3C3; font-weight: bold;">Accesso</p>
-<?php	if($job == "logout") {
+<?php
+	if($job == "logout") {
         echo '<div class="info-logout">Successfully logged out!</div>';
 	} else if($err == "error" || $job == "error") {
 		echo '<div class="info-error">Login failed!</div>';
+		session_destroy();
 	} else if($err == "wrong") {
 		echo '<div class="info-error">Username/Password wrong!</div>';
+		session_destroy();
 	} else if($err == "old" || $job == "old-session") {
 		echo '<div class="info-error">Session expired!</div>';
+		session_destroy();
 	}
 ?>
     <form action="" method="POST" class="centrato">

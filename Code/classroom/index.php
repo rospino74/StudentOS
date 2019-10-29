@@ -14,7 +14,7 @@ $theme_color="#53e300"; //default: #53e300
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
 	<meta name="charset" value="utf-8">
 	<meta name="theme-color" content="<?php echo $theme_color;?>">
@@ -98,22 +98,6 @@ break;
 case'write':
 $invia = isset($_POST['send']) ? $_POST['send'] : false;
  if($invia) {
-	$title = $_POST['title'];	
-	$text = $_POST['text'];
-	$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`, `author`) VALUES (". rand() .", CURRENT_DATE, :title, :text, '".$_SERVER['REMOTE_ADDR']."', :author)";
-	
-	$query = $link->prepare( $sql );
-	
-	try{
-		if(!$query->execute([':title' => $title, ':text' => $text, ':author' => $name])) throw new PDOException("Database error: " . json_encode($query->errorInfo()));
-	}
-	catch (PDOException $e) {
-		header("HTTP/1 500 Database Error");
-		echo 'Execution failed: ' . $e->getMessage();
-		
-		break;
-	}
-	header('HTTP/1.0 200 Ok');
 	header('Location: ' . $class);
 };
 echo <<<EOD
