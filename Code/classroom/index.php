@@ -45,14 +45,14 @@ $theme_color="#53e300"; //default: #53e300
 	</style>
 </head>
 <body>
-	<div class="navbar">
+	<nav class="navbar">
 		<a href="../" class="navbar-item navbar-icon" data-action="home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
 		<a href="#last" class="navbar-item">Last post</a>
 		<a class="navbar-item" data-action="back">Back</a>
 		<a href="<?php echo $_GET['class']; ?>:write" class="navbar-item">Add new Post</a>
 		<a style="float:right;" class="navbar-item" data-action="quit">Sign Out <i class="fas fa-sign-out-alt"></i></a>
-	</div>
-<span id="last"></span>
+	</nav>
+
 <?php
 $class = $_GET['class'];
 $action = isset($_GET['action']) ? $_GET['action'] : null;
@@ -60,39 +60,22 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 switch($action) {
 
 default:
-echo '<h1 style="color: '.$color.'; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for '.strtoupper($class).'</h1>';
-
-require_once("../db.config.php");
-
-$query = $link->prepare("SELECT * FROM $class ORDER BY `date` DESC");
-
-if($query->execute() == false)
-	break;
-
-while($data = $query->fetch(PDO::FETCH_ASSOC)) {
-	$tmp_date = explode("-", $data['date']);
-	 
-	$id = $data['id'];
-	$date = $tmp_date[2] . '/' . $tmp_date[1] . '/' . $tmp_date[0];
-	$title = $data['title'];
-	$content = $data['content'];
-	$author = $data['author'];
+	echo '<h1 style="color: '.$color.'; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for '.strtoupper($class).'</h1>';
+?>
+	<section class="posts">
+		<span id="last"></span>
+	</section>
 	
-//ora inserisco la tabella
- echo <<<EOD
- <article class="content" id="post_$id">
-	<header class="title">
-		<h2>$title</h2>
-	</header>
-    <div class="text">
-    	<p>$content</p>
-    </div>
-	<div class="info">
-		$author	<i class="fas fa-user"></i><br />$date <i class="fas fa-clock"></i>
-	</div>	
- </article>
-EOD;
- };
+	<!--posts loader-->
+	<script src="../js/getPost.js"></script>
+	<script>
+		getPost(document.querySelector("section.posts"), "<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
+		
+		setInterval( () => {
+			getPost(document.querySelector("section.posts"), "<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
+		}, 120000)
+	</script>
+<?php
 break;
 //se a è addnews
 case'write':
@@ -114,6 +97,6 @@ EOD;
 break;
 }; //fine switch
 ?>
-<script src="../js/navbar.js"></script>
+	<script src="../js/navbar.js"></script>
 </body>
 </html>
