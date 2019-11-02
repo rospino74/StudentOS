@@ -359,9 +359,7 @@ workflows:
   installer:
     jobs:
       - install
-      - load_sql:
-          requires:
-            - install
+      - load_sql
   api:
     jobs:
       - managePost
