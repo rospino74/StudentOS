@@ -1,4 +1,7 @@
-function getPost( container, classroom, session ) {
+function getPost(classroom, session ) {
+	var container = document.querySelector("section.posts");
+	
+	var out = false;
 	
 	var loader = new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -13,9 +16,9 @@ function getPost( container, classroom, session ) {
 	});
 	
 	loader.then((result) => {
+		var data = JSON.parse( result );
 		container.innerHTML = "";
 		
-		var data = JSON.parse( result );
 		data.forEach(( elem ) => {
 			
 			var post = document.createElement("article");
@@ -24,9 +27,13 @@ function getPost( container, classroom, session ) {
 			
 			post.innerHTML = '<header class="title"><h2>' + elem.text.title + '</h2></header><div class="text"><p>' + elem.text.content + '</p></div><div class="info">' + elem.author + '	<i class="fas fa-user"></i><br />' + elem.date + ' <i class="fas fa-clock"></i></div>';
 			
-			
-			
 			container.appendChild( post );
+			
+			out = true;
 		});
+	}).catch(() => {
+		out = false;
 	});
+	
+	return out;
 }
