@@ -2,8 +2,9 @@
 
 	require_once("../../db.config.php");
 	
-	$title = $_POST['title'];	
-	$text = $_POST['text'];
+	$title = str_replace("<", "&lt;", str_replace("script", "&#115;&#99;&#114;&#105;&#112;&#116;", str_replace(">", "&gt;", $_POST['title'])));	
+	$text = str_replace("<", "&lt;", str_replace("script", "&#115;&#99;&#114;&#105;&#112;&#116;", str_replace(">", "&gt;", $_POST['text'])));
+
 	$class = $_POST['class'];
 	
 	$session = $_POST['session'];

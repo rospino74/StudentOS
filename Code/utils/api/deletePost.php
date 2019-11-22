@@ -13,10 +13,16 @@
 		$result = $query->fetch(PDO::FETCH_ASSOC);
 	}else{
 		header('HTTP/1.0 500 Database Error');
+		echo '{"Error":true, "Detail":"Login Error (Database)"}';
+		
+		exit;
 	}
 	
 	if($result['count'] != 1) {
 		header('HTTP/1.1 401 Unauthorized');
+		echo '{"Error":true, "Detail":"Unauthorized"}';
+		
+		exit;
 	}
 	
 	require_once("../managePost.php");
@@ -29,6 +35,7 @@
 	
 	if($name != $author && $role != "administrator" && $role != "teacher") {
 		header('HTTP/1.1 403 Forbidden');
+		echo '{"Error":true, "Detail":"Not enough permissions"}';
 		
 		exit;
 	}
@@ -39,6 +46,8 @@
 		header('HTTP/1.1 200 OK');
 	} else {
 		header('HTTP/1.1 500 Database Error');
+		echo '{"Error":true, "Detail":"Deleting Error (Database)"}';
+		
 		exit;
 	}
 

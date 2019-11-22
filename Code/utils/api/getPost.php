@@ -42,8 +42,10 @@ while($data = $posts->fetch(PDO::FETCH_ASSOC)) {
  
 	$id = $data['id'];
 	
-	$tmp_date = explode("-", $data['date']);
-	$date = $tmp_date[2] . '/' . $tmp_date[1] . '/' . $tmp_date[0];
+	$tmp_date1 = explode(" ", $data['date']);
+	$tmp_date = explode("-", $tmp_date1[0]);
+	
+	$date = $tmp_date[2] . '/' . $tmp_date[1] . '/' . $tmp_date[0] . " " . $tmp_date1[1];
 	
 	$text['title'] = $data['title'];
 	$text['content'] = $data['content'];

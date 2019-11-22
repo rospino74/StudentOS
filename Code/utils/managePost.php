@@ -5,7 +5,7 @@
 		$text = $data['text'];
 		$author = $data['author'];
 		
-		$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`, `author`) VALUES (". rand() .", CURRENT_DATE, :title, :text, '".$_SERVER['REMOTE_ADDR']."', :author)";
+		$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`, `author`) VALUES (". rand() .", NOW(), :title, :text, '".$_SERVER['REMOTE_ADDR']."', :author)";
 	
 		$query = $link->prepare( $sql );
 	
