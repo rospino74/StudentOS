@@ -6,7 +6,6 @@
 		<a href="../check.php?action=logout" style="float:right;" class="navbar-item" data-action="action:quit">Esci</a>
 	</div>
 */
-html {scroll-behavior: smooth;}
 
 .navbar {
 	height: 8%;
@@ -20,6 +19,7 @@ html {scroll-behavior: smooth;}
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 1;
 	
 	font-family: 'Roboto', sans-serif;
 	text-decoration: none;

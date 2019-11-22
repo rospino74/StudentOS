@@ -28,7 +28,7 @@ CREATE TABLE `class1` (
 	`id` int(4) NOT NULL AUTO_INCREMENT,
 	`title` char(255) NOT NULL,
 	`content` blob NOT NULL,
-	`date` date NOT NULL,
+	`date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`ip` char(25) NOT NULL,
 	`author` char(20) NOT NULL,
 	PRIMARY KEY (`id`),

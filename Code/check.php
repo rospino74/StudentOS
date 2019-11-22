@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("db.config.php");
+#session_id(rand());
 
 $err = false;
 $job = isset($_GET['action']) ? $_GET['action'] : null;
@@ -14,12 +15,13 @@ if($job == "logout") {
 	if(isset($_POST['user'])) {
 		$user = $_POST['user'];
   		$pw = $_POST['pw'];
-  		$query = $link->prepare("SELECT COUNT(id) as 'count', id FROM users WHERE `username` = ? and `password` = PASSWORD(?)");
+  		$query = $link->prepare("SELECT COUNT(id) as 'count', id, session FROM users WHERE `username` = ? and `password` = PASSWORD(?)");
 			
 			if($query->execute([$user, $pw]) != false):
 				$result = $query->fetch(PDO::FETCH_ASSOC);
 				
 				$num = $result['count'];
+				$session = $result['session'];
 				
 			else:
 				$num = 0;
@@ -27,7 +29,12 @@ if($job == "logout") {
  
   		if($num == 1) {
 			
-			$query = $link->prepare("UPDATE `users` SET `session`= ? WHERE `id` = ?");
+			if($session == session_id()) { 
+				$query = $link->prepare("UPDATE `users` SET `session` = NULL WHERE `session` = '$session'");
+				$query->execute();
+			}
+			
+			$query = $link->prepare("UPDATE `users` SET `session` = ? WHERE `id` = ?");
 			
 			if($query->execute([session_id(), $result['id']]) != false){
 				setcookie("logged_in", 1, time() + 86400);
