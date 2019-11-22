@@ -30,14 +30,9 @@ $theme_color="#53e300"; //default: #53e300
 	<link href='../style/input.css'  rel='stylesheet'>
 	<link href='../style/navbar.css' rel='stylesheet'>
 	<link href='../style/font.css'   rel='stylesheet'>
+	<link href='../style/write.css'  rel='stylesheet'>
+	<!--link href='../style/alert.css'   rel='stylesheet'-->
 	
-    <!--link href='../style/media.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script>
-    	$( "#btn-menu" ).click(function() {
-				$(".menu-item").toggle();
-		});
-    </script-->
 	<style>
 		.info {
 			text-align: right;
@@ -49,54 +44,31 @@ $theme_color="#53e300"; //default: #53e300
 		<a href="../" class="navbar-item navbar-icon" data-action="home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
 		<a href="#last" class="navbar-item">Last post</a>
 		<a class="navbar-item" data-action="back">Back</a>
-		<a href="<?php echo $_GET['class']; ?>:write" class="navbar-item">Add new Post</a>
+		<!--a href="<?php echo $_GET['class']; ?>:write" class="navbar-item">Add new Post</a-->
+		<a href="javascript:openWriteWindow('<?php echo session_id(); ?>', '<?php echo $_GET['class']; ?>');" class="navbar-item">Write Post</a>
+		<a href="javascript:showDeleteButtons('<?php echo session_id(); ?>', '<?php echo $_GET['class']; ?>');" class="navbar-item">Remove Post</a>
 		<a style="float:right;" class="navbar-item" data-action="quit">Sign Out <i class="fas fa-sign-out-alt"></i></a>
 	</nav>
+	
+	<h1 style="color: #33cc33; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for <?php echo strtoupper($class); ?></h1>
 
-<?php
-$class = $_GET['class'];
-$action = isset($_GET['action']) ? $_GET['action'] : null;
-
-switch($action) {
-
-default:
-	echo '<h1 style="color: '.$color.'; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for '.strtoupper($class).'</h1>';
-?>
 	<section class="posts">
 		<span id="last"></span>
 	</section>
 	
-	<!--posts loader-->
+	<!--posts manager-->
 	<script src="../js/getPost.js"></script>
+	<script src="../js/deletePost.js" async></script>
+	<!--script src="../js/alert.js"></script-->
+	<script src="../js/writePost.js" async></script>
+	<script src="../js/navbar.js"></script>
+	
 	<script>
-		getPost(document.querySelector("section.posts"), "<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
+		getPost("<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>")
 		
 		setInterval( () => {
-			getPost(document.querySelector("section.posts"), "<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
-		}, 120000)
+			getPost("<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
+		}, 60000)
 	</script>
-<?php
-break;
-//se a è addnews
-case'write':
-$invia = isset($_POST['send']) ? $_POST['send'] : false;
- if($invia) {
-	header('Location: ' . $class);
-};
-echo <<<EOD
-<div class="content" style="text-align: center; margin-top: 5%;">
-	<form action="" method="POST">
-			<label for="title" style="color: $color; font-family: Architects Daughter;">Title</label><br />
-            <input name="title" type="text" placeholder="Insert the title..."/><br />
-            <label for="text" style="color: $color; font-family: Architects Daughter;">Text</label><br />
-            <textarea name="text" placeholder="Insert the text..." style="margin-bottom: 15px;" style="height: 50%; width: 50%;"></textarea><br />
-            <input name="send" type="submit" value="Submit" style="margin-right: 25px;"/><button data-action="back" class="btn-negative">Indietro</button>
-	</form>
-</div>
-EOD;
-break;
-}; //fine switch
-?>
-	<script src="../js/navbar.js"></script>
 </body>
 </html>
