@@ -204,6 +204,211 @@ jobs:
       - run:
           command: cd Code/admin/ && php install.php
           name: Running install page
+  
+  #api testing
+  managePost:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing managePost.php
+      - run:
+          command: cd Code/utils/ && php managePost.php
+          name: Running managePost page
+   
+  getUserInfo:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing getUserInfo.php
+      - run:
+          command: cd Code/utils/ && php getUserInfo.php
+          name: Running getUserInfo page
+          
+  getPostInfo:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing getPostInfo.php
+      - run:
+          command: cd Code/utils/ && php getPostInfo.php
+          name: Running getPostInfo page
+          
+  getClassInfo:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing getClassInfo.php
+      - run:
+          command: cd Code/utils/ && php getClassInfo.php
+          name: Running getClassInfo page
+          
+          
+  addPost:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
+          name: Installing MySQL
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
+            FILE=Code/db.config.php
+            if [ -f "$FILE" ]; then
+               echo "$FILE exist"
+            else
+                echo "$FILE not exist"
+                exit 1
+            fi
+            
+      #testing addPost.php
+      - run:
+          command: cd Code/utils/api && echo 'session=0&title=1&text=2&class=class1' | REQUEST_METHOD=POST  SCRIPT_FILENAME=addPost.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
+          name: Running addPost page
+          
+  deletePost:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
+          name: Installing MySQL
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
+            FILE=Code/db.config.php
+            if [ -f "$FILE" ]; then
+               echo "$FILE exist"
+            else
+                echo "$FILE not exist"
+                exit 1
+            fi
+            
+      #testing deletePost.php
+      - run:
+          command: cd Code/utils/api && echo 'session=0&id=0&class=class1' | REQUEST_METHOD=POST  SCRIPT_FILENAME=deletePost.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
+          name: Running deletePost page
+          
+  getPost:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
+          name: Installing MySQL
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
+            FILE=Code/db.config.php
+            if [ -f "$FILE" ]; then
+               echo "$FILE exist"
+            else
+                echo "$FILE not exist"
+                exit 1
+            fi
+            
+      #testing getPost.php
+      - run:
+          command: cd Code/utils/api && echo 'session=0&class=class1' | REQUEST_METHOD=POST  SCRIPT_FILENAME=getPost.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
+          name: Running getPost page
           
 workflows:
   version: 2
@@ -218,6 +423,22 @@ workflows:
   installer:
     jobs:
       - install
-      - load_sql:
+      - load_sql
+  api:
+    jobs:
+      - managePost
+      - getUserInfo
+      - getPostInfo
+      - getClassInfo
+      - addPost:
           requires:
-            - install
+            - managePost
+            - getUserInfo
+            - getPostInfo
+            - getClassInfo
+      - deletePost:
+          requires:
+            - managePost
+            - getUserInfo
+            - getPostInfo
+      - getPost

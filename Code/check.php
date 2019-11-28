@@ -1,65 +1,67 @@
 <?php
-require_once("db.config.php");
+session_start();
+require_once ("db.config.php");
 
-$err = false;
-$job = isset($_GET['action']) ? $_GET['action'] : null;
+$err = isset($_GET['action']) ? $_GET['action'] : false;
 
-if($job == "logout") {
-	session_destroy();
-    setcookie("logged_in", 0, time() - 36000);
-	setcookie("session", NULL, time() - 36000);
+if ($err == "logout")
+{
+    $query = $link->prepare("UPDATE `users` SET `session` = '' WHERE `session` = ?");
+    $query->execute([session_id() ]);
+
+    session_destroy();
+    setcookie("logged_in", 0, time() - 36000, $path['server'], $domain, true, false);
+    setcookie("session", 0, time() - 36000, $path['server'], $domain, true, false);
+    session_start();
 }
-	
-	if(isset($_POST['user'])) {
-		$user = $_POST['user'];
-  		$pw = $_POST['pw'];
-  		$query = $link->prepare("SELECT COUNT(id) as 'count', id FROM users WHERE `username` = ? and `password` = PASSWORD(?)");
-			
-			if($query->execute([$user, $pw]) != false):
-				$result = $query->fetch(PDO::FETCH_ASSOC);
-				
-				$num = $result['count'];
-				
-			else:
-				$num = 0;
-			endif;
- 
-  		if($num == 1) {
-			
-			session_start();
-			
-			$query = $link->prepare("UPDATE `users` SET `session`= ? WHERE `id` = ?");
-			
-			if($query->execute([session_id(), $result['id']]) != false){
-				setcookie("logged_in", 1, time() + 86400);
-				setcookie("session", session_id(), time() + 86395);
-			} else {
-				$err = "error";
-				return;
-			}
-			
-  			header('HTTP/1.1 200 OK');
-			
-			if(isset($_GET['ref']))
-				header("Location: $_GET[ref]");
- 			else
-				header('Location: index.php');
-			
-			exit;
-  			//se sbagliato
-  		} else {
-  			header('HTTP/1.1 403 Forbidden');
-			$err = "wrong";
-			$job = null;
-		}
-	}
+
+if (isset($_POST['user']))
+{
+    $user = $_POST['user'];
+    $pw = $_POST['pw'];
+    $query = $link->prepare("SELECT COUNT(id) as 'count', id, session FROM users WHERE `username` = ? and `password` = PASSWORD(?)");
+
+    if ($query->execute([$user, $pw]) != false):
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        $num = $result['count'];
+        else:
+            $num = 0;
+        endif;
+
+        if ($num == 1)
+        {
+            $query = $link->prepare("UPDATE `users` SET `session` = ? WHERE `id` = ?");
+
+            if ($query->execute([session_id() , $result['id']]) != false)
+            {
+                header('HTTP/1.1 200 OK');
+
+                setcookie("session", session_id() , 0, $path['server'], $domain, true, true);
+                setcookie("logged_in", 1, 0, $path['server'], $domain, true, true);
+
+                if (isset($_GET['ref'])) header("Location: $_GET[ref]");
+                else header('Location: index.php');
+                exit;
+            }
+            else
+            {
+                $err = "error";
+                return;
+            }
+        }
+        else
+        {
+            header('HTTP/1.1 401 Unauthorized');
+            $err = "wrong";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8"/>
 	<meta name="theme-color" content="#53e300"/>
-	<meta name="Author" content="Marko"/>
 	<meta name="Description" content="Login into Student's system" />
 	<title>Student | Sign in page</title>
 	
@@ -98,15 +100,26 @@ if($job == "logout") {
 <body>
 <div class="centrato">
 	<p style="text-align: center; font-size: 18pt; font-family: terminal, monaco, monospace; color: #3C3; font-weight: bold;">Accesso</p>
-<?php	if($job == "logout") {
+<?php
+    if ($err == "logout")
+    {
         echo '<div class="info-logout">Successfully logged out!</div>';
-	} else if($err == "error" || $job == "error") {
-		echo '<div class="info-error">Login failed!</div>';
-	} else if($err == "wrong") {
-		echo '<div class="info-error">Username/Password wrong!</div>';
-	} else if($err == "old" || $job == "old-session") {
-		echo '<div class="info-error">Session expired!</div>';
-	}
+    }
+    else if ($err == "error")
+    {
+        echo '<div class="info-error">Login failed!</div>';
+        session_destroy();
+    }
+    else if ($err == "wrong")
+    {
+        echo '<div class="info-error">Username/Password wrong!</div>';
+        session_destroy();
+    }
+    else if ($err == "old-session")
+    {
+        echo '<div class="info-error">Session expired!</div>';
+        
+    }
 ?>
     <form action="" method="POST" class="centrato">
 		<p style="text-align: center;">

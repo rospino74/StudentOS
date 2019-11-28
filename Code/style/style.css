@@ -1,3 +1,9 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	scroll-behavior: smooth;
+}
+
 /*Box style*/
 .center {
     position: absolute;
@@ -74,6 +80,8 @@ div.centrato {
 	color: black;
     border: 1px #eee solid;
     text-align: center;
+	
+	position: relative;
 }
 /*Title*/
 .title {
@@ -98,4 +106,19 @@ div.centrato {
 .comment {
 	margin-top: 5%;
     border-top: #eee solid 1px;
+}
+/*remove post btn*/
+.btn-remove-post {
+	color: #fff;
+	background: #f00;
+	border: none;
+	
+	position: absolute;
+	top: 0;
+	right: 0;
+	
+	height: 25px;
+	width: 25px;
+	padding: 5px;
+	border-radius: 15px;
 }

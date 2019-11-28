@@ -246,6 +246,9 @@ $apache_config = "
 RewriteEngine On
 RewriteBase " . str_replace('\\', '/', dirname($_SERVER['PHP_SELF'], 2)) . "/
 RewriteRule ^classes/([A-z0-9+]*)([:]?)([a-z+]*)$ classroom/?class=$1&action=$3 [L]
+
+#api point
+RewriteRule ^api/([A-z0-9+]+)$ utils/api/$1.php [L]
 </IfModule>";
 
 

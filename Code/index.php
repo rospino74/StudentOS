@@ -16,19 +16,15 @@ $theme_color="#53e300"; //default: #53e300
 <!DOCTYPE html>
 <html>
 <head>
-    <meta  charset="utf-8">
+    <meta charset="utf-8">
 	<meta name="theme-color" content="<?php echo $theme_color;?>">
-	<meta name="Author" content="Marko">
-	<meta name="Description" content="Student Home" />
+	<meta name="Description" content="Student home page" />
 	<meta name="MobileOptimized" content="176" />
 	<meta name="viewport" content="width=50%, user-scalable=0, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 	<title>Student | Home</title>
-	
-	<link rel="shortcut icon" href="rsc/favicon.png" type="image/x-icon">
+	<link href="rsc/favicon.png"    rel="shortcut icon" type="image/x-icon">
 	<link href="rsc/icon-hires.png" rel="icon" sizes="192x192" />
-	<link href="rsc/icon.png" rel="icon" sizes="128x128" />
-	
-	
+	<link href="rsc/icon.png"       rel="icon" sizes="128x128" />
 	
 	<link rel="stylesheet" href="style/navbar.css">
 	<link rel="stylesheet" href="style/font.css">
