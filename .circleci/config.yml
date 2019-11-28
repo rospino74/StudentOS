@@ -247,7 +247,7 @@ jobs:
       - checkout
       #testing getClassInfo.php
       - run:
-          command: cd Code/utils/ && php getClseeInfo.php
+          command: cd Code/utils/ && php getClssInfo.php
           name: Running getClassInfo page
           
           
