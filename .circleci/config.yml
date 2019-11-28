@@ -239,6 +239,17 @@ jobs:
           command: cd Code/utils/ && php getPostInfo.php
           name: Running getPostInfo page
           
+  getClassInfo:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing getClassInfo.php
+      - run:
+          command: cd Code/utils/ && php getClseeInfo.php
+          name: Running getClassInfo page
+          
           
   addPost:
     docker:
@@ -418,11 +429,13 @@ workflows:
       - managePost
       - getUserInfo
       - getPostInfo
+      - getClassInfo
       - addPost:
           requires:
             - managePost
             - getUserInfo
             - getPostInfo
+            - getClassInfo
       - deletePost:
           requires:
             - managePost

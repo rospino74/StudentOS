@@ -25,7 +25,17 @@ function getPost(classroom, session ) {
 			post.classList.add("content");
 			post.id = "post-" + elem.id;
 			
-			post.innerHTML = '<header class="title"><h2>' + elem.text.title + '</h2></header><div class="text"><p>' + elem.text.content + '</p></div><div class="info">' + elem.author + '	<i class="fas fa-user"></i><br />' + elem.date + ' <i class="fas fa-clock"></i></div>';
+		post.innerHTML = `<h2 class="title">
+							${elem.text.title}
+						</h2>
+						<p class="text">
+							${elem.text.content}
+						</p>
+						<div class="info">
+							${elem.author} <i class="fas fa-user"></i>
+							<br />
+							${elem.date} <i class="fas fa-clock"></i>
+						</div>`;
 			
 			container.appendChild( post );
 			

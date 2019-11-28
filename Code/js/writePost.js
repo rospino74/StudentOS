@@ -9,11 +9,12 @@ function openWriteWindow( session, classroom ) {
 	container.classList.add("write-container");
 	container.innerHTML = `<div class="write-bg"></div>
 	<div class="write-box">
+		<h1>Write a post</h1>
 		<label for="title">Title</label><br />
         <input id="title" type="text" placeholder="Insert the title..."/><br />
         <label for="text">Text</label><br />
         <textarea id="text" placeholder="Insert the text..."></textarea><br />
-        <button name="send" class="btn-positive" onclick="writePost( '` + session + `', '` + classroom +`' );"><i class="fas fa-sticky-note"></i> Post</button><button onclick="closeWriteWindow();" class="btn-negative"><i class="fas fa-ban"></i> Close</button>
+        <button name="send" class="btn-positive" onclick="writePost( '${session}', '${classroom}' );"><i class="fas fa-sticky-note"></i> Post</button><button onclick="closeWriteWindow();" class="btn-negative"><i class="fas fa-ban"></i> Close</button>
 	</div>`;
 	
 	body.insertBefore(container, body.firstChild);

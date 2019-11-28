@@ -50,7 +50,7 @@ $theme_color="#53e300"; //default: #53e300
 		<a style="float:right;" class="navbar-item" data-action="quit">Sign Out <i class="fas fa-sign-out-alt"></i></a>
 	</nav>
 	
-	<h1 style="color: #33cc33; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for <?php echo strtoupper($class); ?></h1>
+	<h1 style="color: #33cc33; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for <?php echo strtoupper($_GET['class']); ?></h1>
 
 	<section class="posts">
 		<span id="last"></span>
