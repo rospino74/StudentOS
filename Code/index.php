@@ -18,8 +18,7 @@ $theme_color="#53e300"; //default: #53e300
 <head>
     <meta charset="utf-8">
 	<meta name="theme-color" content="<?php echo $theme_color;?>">
-	<meta name="Author" content="Marko">
-	<meta name="Description" content="Student Home" />
+	<meta name="Description" content="Student home page" />
 	<meta name="MobileOptimized" content="176" />
 	<meta name="viewport" content="width=50%, user-scalable=0, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 	<title>Student | Home</title>

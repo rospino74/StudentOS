@@ -18,7 +18,6 @@ $theme_color="#53e300"; //default: #53e300
 <head>
 	<meta name="charset" value="utf-8">
 	<meta name="theme-color" content="<?php echo $theme_color;?>">
-	<meta name="Author" content="Marko">
 	<meta name="Description" content="Last posts for <?php echo strtoupper($_GET['class']); ?>" />
 	<title>Student | <?php echo $_GET['class']; ?></title>
 	
@@ -42,7 +41,7 @@ $theme_color="#53e300"; //default: #53e300
 <body>
 	<nav class="navbar">
 		<a href="../" class="navbar-item navbar-icon" data-action="home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
-		<a href="#last" class="navbar-item">Last post</a>
+		<a href="#top" class="navbar-item">Last post</a>
 		<a class="navbar-item" data-action="back">Back</a>
 		<!--a href="<?php echo $_GET['class']; ?>:write" class="navbar-item">Add new Post</a-->
 		<a href="javascript:openWriteWindow('<?php echo session_id(); ?>', '<?php echo $_GET['class']; ?>');" class="navbar-item">Write Post</a>
@@ -51,10 +50,8 @@ $theme_color="#53e300"; //default: #53e300
 	</nav>
 	
 	<h1 style="color: #33cc33; font-family: Architects Daughter; margin-top: 8.5%; text-align: center;">Last post for <?php echo strtoupper($_GET['class']); ?></h1>
-
-	<section class="posts">
-		<span id="last"></span>
-	</section>
+	<span id="top"></span>
+	<section class="posts"></section>
 	
 	<!--posts manager-->
 	<script src="../js/getPost.js"></script>
@@ -64,7 +61,7 @@ $theme_color="#53e300"; //default: #53e300
 	<script src="../js/navbar.js"></script>
 	
 	<script>
-		getPost("<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>")
+		getPost("<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");
 		
 		setInterval( () => {
 			getPost("<?php echo $_GET['class']; ?>", "<?php echo session_id(); ?>");

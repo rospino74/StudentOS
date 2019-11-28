@@ -14,12 +14,18 @@
 		$result = $query->fetch(PDO::FETCH_ASSOC);
 	}else{
 		header('HTTP/1.0 500 Database Error');
+		echo '{"Error":true, "Detail":"Login Error (Database)"}';
 		exit;
 	}
 	
-	if($result['count'] != 1 || ($result['role'] == "student" && getClassInfo("can_students_post", $class, $link) == 0)) {
+	if($result['count'] != 1) {
 		header('HTTP/1.1 401 Unauthorized');
+		echo '{"Error":true, "Detail":"Unauthorized"}';
 		exit;
+	}
+	if($result['role'] == "student" && getClassInfo("can_students_post", $class, $link) == 0) {
+		header('HTTP/1.1 403 Forbidden');
+		echo '{"Error":true, "Detail":"Not enough permissions"}';
 	}
 	
 	require_once("../managePost.php");
@@ -33,6 +39,7 @@
 		header('HTTP/1.1 200 OK');
 	} else {
 		header('HTTP/1.1 500 Database Error');
+		echo '{"Error":true, "Detail":"Inserting Error (Database)"}';
 		exit;
 	}
 

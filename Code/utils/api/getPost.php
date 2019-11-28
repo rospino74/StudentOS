@@ -34,8 +34,6 @@ if($posts->execute() == false) {
 	exit;
 }
 
-//print_r($posts->fetchAll(PDO::FETCH_ASSOC));
-
 $return = array();
 
 while($data = $posts->fetch(PDO::FETCH_ASSOC)) {
