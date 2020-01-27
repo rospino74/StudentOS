@@ -1,18 +1,20 @@
 <?php
 session_start();
 require_once ("db.config.php");
+require_once ("utils/session.php");
 
-$err = isset($_GET['action']) ? $_GET['action'] : false;
+$err = isset($_GET['action']) ? $_GET['action'] : null;
 
-if ($err == "logout")
-{
-    $query = $link->prepare("UPDATE `users` SET `session` = '' WHERE `session` = ?");
-    $query->execute([session_id() ]);
+//build a new session if the user has done the log out
+if ($err == "logout") buildSession();
 
-    session_destroy();
-    setcookie("logged_in", 0, time() - 36000, $path['server'], $domain, true, false);
-    setcookie("session", 0, time() - 36000, $path['server'], $domain, true, false);
-    session_start();
+//redirecting the user if he has already done the login and he don't want sign out  
+if(isset($_COOKIE['logged_in']) && $_COOKIE['logged_in'] == true && isset($_COOKIE['session']) && $_COOKIE['session'] == session_id() && !isset($err)) {
+	if (isset($_GET['ref']))
+		header("Location: $_GET[ref]");
+    else
+		header('Location: index.php');
+    exit;
 }
 
 if (isset($_POST['user']))
@@ -37,8 +39,8 @@ if (isset($_POST['user']))
             {
                 header('HTTP/1.1 200 OK');
 
-                setcookie("session", session_id() , 0, $path['server'], $domain, true, true);
-                setcookie("logged_in", 1, 0, $path['server'], $domain, true, true);
+                setcookie("session", session_id(), 0);
+                setcookie("logged_in", 1, 0);
 
                 if (isset($_GET['ref'])) header("Location: $_GET[ref]");
                 else header('Location: index.php');
@@ -63,7 +65,7 @@ if (isset($_POST['user']))
 	<meta charset="utf-8"/>
 	<meta name="theme-color" content="#53e300"/>
 	<meta name="Description" content="Login into Student's system" />
-	<title>Student | Sign in page</title>
+	<title>Student | Sign in</title>
 	
 	<link rel="shortcut icon" href="rsc/icon.png" type="image/x-icon">
 	<link href="rsc/icon-hires.png" rel="icon" sizes="192x192" />
@@ -98,7 +100,7 @@ if (isset($_POST['user']))
     </style>
 </head>
 <body>
-<div class="centrato">
+<div class="login-container">
 	<p style="text-align: center; font-size: 18pt; font-family: terminal, monaco, monospace; color: #3C3; font-weight: bold;">Accesso</p>
 <?php
     if ($err == "logout")
@@ -108,20 +110,25 @@ if (isset($_POST['user']))
     else if ($err == "error")
     {
         echo '<div class="info-error">Login failed!</div>';
-        session_destroy();
+        buildSession();
     }
     else if ($err == "wrong")
     {
         echo '<div class="info-error">Username/Password wrong!</div>';
-        session_destroy();
+        buildSession();
     }
     else if ($err == "old-session")
     {
         echo '<div class="info-error">Session expired!</div>';
         
     }
+	else if ($err == "not-permission")
+    {
+        echo '<div class="info-error">You don\'t have enough permission!</div>';
+        
+    }
 ?>
-    <form action="" method="POST" class="centrato">
+    <form action="" method="POST">
 		<p style="text-align: center;">
 			<label for="user" style="font-size: 12pt; font-family: 'courier new', courier, monospace; color: #33cc33; font-weight: bold; ">username</label><br />
 			<input name="user" type="text" required /><br />

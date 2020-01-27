@@ -8,7 +8,8 @@ if($_COOKIE['logged_in'] == true && $_COOKIE['session'] == session_id()) {
 	$username = getUserInfo("username", session_id(), $link);
 	$role = getUserInfo("role", session_id(), $link);
 } else {
-	header('Location: check.php?ref=' . urlencode($_SERVER['REQUEST_URI']) . '&action=old-session');
+	header('Location: check.php?action=old-session');
+	exit;
 };
 $color="#33CC33";
 $theme_color="#53e300"; //default: #53e300
@@ -26,8 +27,7 @@ $theme_color="#53e300"; //default: #53e300
 	<link href="rsc/icon-hires.png" rel="icon" sizes="192x192" />
 	<link href="rsc/icon.png"       rel="icon" sizes="128x128" />
 	
-	<link rel="stylesheet" href="style/navbar.css">
-	<link rel="stylesheet" href="style/font.css">
+	<link rel="stylesheet" href="style/style.css">
 	
 	<link rel="manifest" href="rsc/manifest.json">
 	<style>
@@ -103,7 +103,6 @@ $theme_color="#53e300"; //default: #53e300
 		
 		<?php
 		require_once("db.config.php");
-		
 		$query = $link->prepare("SELECT `name` FROM `classrooms` WHERE `members` LIKE '%\"$username\"%';");
 		echo $query->execute() ? "" : $link->errorInfo;
 		
@@ -118,7 +117,7 @@ $theme_color="#53e300"; //default: #53e300
 </div>
 <script src="js/navbar.js"></script>
 <script>
-    var spinner = document.querySelector("#pagina");
+    let spinner = document.querySelector("#pagina");
     spinner.addEventListener("change", (e) => {
 		if(spinner.value == "") {
 			e.stopPropagation();

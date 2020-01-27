@@ -38,13 +38,13 @@ input[type=reset], button.btn-negative {
     font-size: 16px;
 	border-radius: 5px;
 	-moz-transition-property: background-color , color;
-	-moz-transition-duration: 0.5s , 0.5s;
+	-moz-transition-duration: 0.2s , 0.2s;
     -o-transition-property: background-color , color;
-	-o-transition-duration: 0.5s , 0.5s;
+	-o-transition-duration: 0.2s , 0.2s;
     -webkit-transition-property: background-color , color;
-	-webkit-transition-duration: 0.5s , 0.5s;
+	-webkit-transition-duration: 0.2s , 0.2s;
     transition-property: background-color , color;
-	transition-duration: 0.5s , 0.5s;
+	transition-duration: 0.2s , 0.2s;
 }
 input[type=reset]:hover, button.btn-negative:hover {
 	background-color: white; /* white */
@@ -62,13 +62,13 @@ input[type=submit], button.btn-positive {
 	border-collapse: 5px;
 	border-radius: 5px;
 	-moz-transition-property: background-color , color;
-	-moz-transition-duration: 0.5s , 0.5s;
+	-moz-transition-duration: 0.2s , 0.2s;
     -o-transition-property: background-color , color;
-	-o-transition-duration: 0.5s , 0.5s;
+	-o-transition-duration: 0.2s , 0.2s;
     -webkit-transition-property: background-color , color;
-	-webkit-transition-duration: 0.5s , 0.5s;
+	-webkit-transition-duration: 0.2s , 0.2s;
     transition-property: background-color , color;
-	transition-duration: 0.5s , 0.5s;
+	transition-duration: 0.2s , 0.2s;
     
 }
 input[type=submit]:hover, button.btn-positive:hover {

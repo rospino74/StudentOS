@@ -1,3 +1,10 @@
+/* Style importing */
+@import url("stylePost.css"); /* posts  */
+@import url("navbar.css");    /* navbar */
+@import url("input.css");     /* inputs */
+@import url("fonts.css");     /* fonts  */
+
+/* General style */
 html, body {
 	padding: 0;
 	margin: 0;
@@ -62,7 +69,7 @@ a:hover:not(.navbar-item) {
 .closebtn:hover {
     color: red;
 }
-div.centrato {
+.centered {
   width: 500px;
   height: 400px;
   position: absolute;
@@ -70,55 +77,11 @@ div.centrato {
   left: 50%;
   margin: -200px 0px 0px -250px;
 }
-
-/*	Style for post	*/
-/*content*/
-.content {
-	margin: 5% 2%;
-	border-radius: 20px;
-    padding: 2%;
-	color: black;
-    border: 1px #eee solid;
-    text-align: center;
-	
-	position: relative;
-}
-/*Title*/
-.title {
-	color: #3c3;
-    font-family: 'Architects Daughter';
-    font-weight: bold;
-    text-align: center;
-}
-/*Text*/
-.text {
-	color: black;
-    font-family: 'Prompt';
-    font-size: 22px;
-    text-align:center;
-}
-/*Info*/
-.info {
-	font-family: 'Prompt';
-}
-
-/*comment*/
-.comment {
-	margin-top: 5%;
-    border-top: #eee solid 1px;
-}
-/*remove post btn*/
-.btn-remove-post {
-	color: #fff;
-	background: #f00;
-	border: none;
-	
-	position: absolute;
-	top: 0;
-	right: 0;
-	
-	height: 25px;
-	width: 25px;
-	padding: 5px;
-	border-radius: 15px;
+/*Login box*/
+.login-container {
+  width: 50vw;
+  height: 50vh;
+  position: absolute;
+  top: 25vh;
+  left: 25vw;
 }

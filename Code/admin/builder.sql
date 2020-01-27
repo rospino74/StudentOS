@@ -31,6 +31,7 @@ CREATE TABLE `class1` (
 	`date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`ip` char(25) NOT NULL,
 	`author` char(20) NOT NULL,
+	`author_id` int(4) NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `id` (`id`),
 	KEY `id_2` (`id`)
