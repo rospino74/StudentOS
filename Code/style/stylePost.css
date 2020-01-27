@@ -1,0 +1,130 @@
+/*	Style for post	*/
+/*content*/
+.post {
+	margin: 10px 2vw;
+	border-radius: 20px;
+	color: #111;
+    border: 1px #eee solid;	
+	position: relative;
+	font-family: 'Prompt';
+	cursor: default;
+}
+.post > .content {
+	margin: 15px;
+	position: relative;
+	min-height: 70px;
+}
+/*Title*/
+.title {
+	margin:0;
+	margin-bottom: 5px;
+	color: #3c3;
+    font-family: 'Architects Daughter';
+}
+/*Text*/
+.text {
+	margin:0;
+	margin-right: 150px;
+    font-size: 15px;
+}
+/*Info*/
+.info {
+	font-size: 12px;
+	text-align: right;
+	position:absolute;
+	bottom: 5px;
+	right: 10px;
+}
+.separator {
+	height: 1px;
+	width: 100%;
+	background-color: #eee;
+}
+
+/*Comment*/
+.comments {
+	margin-top: 10px;
+	max-height: 250px;
+	scroll-behavior: smooth;
+	overflow-y: auto;
+	position: relative;
+}
+.comments > .empty {
+	margin: 5px;
+	font-size: 10px;
+	color: #0005;
+	text-align: center;
+}
+.comments > a.add-comment, .comments > .empty a {
+	border: none !important;
+	padding: 0;
+	font-size: 10px !important;
+}
+.comments > a.add-comment {
+	margin-left: 15px;
+}
+.comments > a.add-comment:visited, .comments > .empty a:visited {
+	color: #3c3 !important;
+}
+.comment {
+	margin: 15px;
+}
+.comments:nth-child(2) {
+	margin-top: 0;
+}
+.comment .author {
+	margin: 0;
+	display: inline;
+	font-size: 15px;
+	color: #3c3;
+}
+.comment .date {
+	display: inline;
+	margin: 0;
+	font-size: 10px;
+	color: #0005;
+}
+.comment .content {
+	margin: 0;
+}
+/* Dropdown menu */
+.menu {
+	position: relative;
+	float: right;
+	display: block;
+	z-index:1;
+}
+.menu .menu-btn {
+	position: absolute;
+	right: 30px;
+	top: 15px;
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	cursor:pointer;
+}
+.menu .menu-content {
+	display: none;
+	position: absolute;
+	right: 0;
+	background-color: #f5f5f5;
+	min-width: 160px;
+	box-shadow: 0px 4px 8px 0px #5555;
+	z-index: 1;
+	font-family: 'Prompt';
+}
+.menu .menu-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+}
+.menu .menu-content a:hover {
+	background-color: #ddd;
+	color: #222;
+}
+.menu .menu-content a:visited {
+	color: #222;
+}

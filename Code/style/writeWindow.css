@@ -1,0 +1,77 @@
+.write-container {
+	position: fixed;
+	z-index: 11;
+	top: 0;
+	left: 0;
+	height: 100vh;
+    width: 100vw;
+}
+.write-box {
+	position: fixed;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	
+	padding: 5px;
+	width: 50vw;
+	
+	background: #fff;
+	border-radius: 25px;
+	box-shadow: 0px 5px 10px #5555;
+}
+.write-bg {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	
+    background-color: #555a;
+    height: 100%;
+    width: 100%;
+}
+
+/* ======= Buttons ======= */
+.write-container .write-box .btn-negative {
+	float: right;
+	margin-right: 5%;
+}
+.write-container .write-box .btn-positive {
+	float: left;
+	margin-left: 5%;
+}
+
+/* ======= Title & Labels ======= */
+.write-container .write-box h1 {
+	color: #33cc33;
+	font-family: Architects Daughter;
+	font-size: 160%;
+	
+	margin-left: 5%;
+	margin-bottom: 0;
+}
+.write-container .write-box label {
+	margin-left: 5%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	
+	color: #33cc33;
+	font-family: Architects Daughter;
+	font-size: 100%
+}
+
+/* ====== Input Fields ====== */
+.write-container .write-box textarea {
+	height: 30vh;
+	width: 90%;
+	
+	padding: 5px;
+	margin-left: 5%;
+	margin-bottom: 1%;
+}
+.write-container .write-box input[type=text] {
+	width: 90%;
+	
+	padding: 5px;
+	margin-left: 5%;
+}

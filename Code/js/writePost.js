@@ -2,6 +2,9 @@ function openWriteWindow( session, classroom ) {
 	if(document.querySelector("div.write-container") != undefined) {
 		return false;
 	}
+	
+	//hiding the body overflow
+	document.body.style.overflow = "hidden";
 
 	var body = document.body;
 	var container = document.createElement("div");
@@ -17,6 +20,15 @@ function openWriteWindow( session, classroom ) {
         <button name="send" class="btn-positive" onclick="writePost( '${session}', '${classroom}' );"><i class="fas fa-sticky-note"></i> Post</button><button onclick="closeWriteWindow();" class="btn-negative"><i class="fas fa-ban"></i> Close</button>
 	</div>`;
 	
+	//adding event
+	container.addEventListener("keypress", (e) => {
+		if(e.ctrlKey || e.charCode == 13) {
+			writePost( session, classroom);
+		} else {
+			return;
+		}
+	});
+	
 	body.insertBefore(container, body.firstChild);
 }
 
@@ -31,6 +43,9 @@ function closeWriteWindow() {
 	windows.forEach(( elem ) => {
 		body.removeChild( elem );
 	});
+	
+	//showing the body overflow
+	document.body.style.overflow = "auto";
 }
 
 function writePost( session, classroom ) {
@@ -44,7 +59,7 @@ function writePost( session, classroom ) {
 		xhr.open("POST", "../api/addPost");
 		
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send("title=" + title.value + "&text=" + text.value + "&class=" + classroom + "&session=" + session);
+		xhr.send("title=" + encodeURI(title.value) + "&text=" + encodeURI(text.value) + "&class=" + classroom + "&session=" + session);
 		
 		xhr.onload = () => resolve(xhr.responseText);
 		xhr.onerror = () => reject(xhr.statusText);
@@ -53,5 +68,6 @@ function writePost( session, classroom ) {
 	uploader.then(() => {
 		closeWriteWindow();
 		getPost( classroom, session );
+		getComment( classroom, session );
 	});
 }

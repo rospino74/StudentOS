@@ -1,16 +1,16 @@
 <?php
-	function addPost($class, $data, $link) {
+	function addComment($class, $data, $link) {
 		
-		$title = $data['title'];	
 		$text = $data['text'];
+		$parent_id = $data['parent_id'];
 		$author_id = $data['author_id'];
 		
-		$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`,`author_id`) VALUES (". rand() .", NOW(), :title, :text, '".$_SERVER['REMOTE_ADDR']."',:author_id)";
+		$sql = "INSERT INTO `comments-$class` (`id`, `parent_id`, `author_id`, `date`, `content`) VALUES (NULL, :parent_id, :author_id, current_timestamp(), :text);";
 	
 		$query = $link->prepare( $sql );
 	
 		try{
-			if(!$query->execute([':title' => $title, ':text' => $text, ':author_id' => $author_id]))
+			if(!$query->execute([':text' => $text, ':parent_id' => $parent_id, ':author_id' => $author_id]))
 				throw new PDOException("Database error: " . json_encode($query->errorInfo()));
 		}
 		catch (PDOException $e) {
@@ -20,10 +20,9 @@
 			return true;
 	}
 	
-	function removePost($class, $id, $link) {
+	function removeComment($class, $id, $link) {
 		
-		$sql = "DELETE FROM `$class` WHERE `id` = :id;
-				DELETE FROM `comments-$class` WHERE `parent_id` = :id;";
+		$sql = "DELETE FROM `comments-$class` WHERE `id` = :id;";
 	
 		$query = $link->prepare( $sql );
 	

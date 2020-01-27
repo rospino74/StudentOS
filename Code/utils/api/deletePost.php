@@ -27,6 +27,7 @@
 	
 	require_once("../managePost.php");
 	require_once("../getUserInfo.php");
+	require_once("../getClassInfo.php");
 	require_once("../getPostInfo.php");
 	
 	$name = getUserInfo("name", $session, $link);
@@ -36,7 +37,11 @@
 	if($name != $author && $role != "administrator" && $role != "teacher") {
 		header('HTTP/1.1 403 Forbidden');
 		echo '{"Error":true, "Detail":"Not enough permissions"}';
-		
+		exit;
+	}
+	if(getClassInfo("is_readonly", $class, $link) == 1) {
+		header('HTTP/1.1 409 Conflict');
+		echo '{"Error":true, "Detail":"' . $class . ' is readonly"}';
 		exit;
 	}
 	

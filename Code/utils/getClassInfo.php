@@ -1,7 +1,7 @@
 <?php
 	function getClassInfo( $what, $name, $link ) {
 		
-		$whitelist = array('id', 'members', 'can_students_post');
+		$whitelist = array('id', 'members', 'can_students_post', 'is_readonly');
 
 		if(array_search($what, $whitelist) === false)
 			return false;

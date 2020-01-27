@@ -1,4 +1,4 @@
-function showDeleteButtons(session, classroom ) {
+function showDeleteButtons( session, classroom ) {
 	var container = document.querySelector("section.posts");
 	
 	container.childNodes.forEach( ( elem ) => {
@@ -39,8 +39,7 @@ function removePost( elem, session, classroom ) {
 	});
 	
 	loader.then(( result ) => {
-		console.log( result );
-		
 		getPost( classroom, session );
+		getComment( classroom, session );
 	});
 }

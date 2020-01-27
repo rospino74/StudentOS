@@ -28,9 +28,9 @@ if(!$in_class) {
 }
 //END AUTHENTICATION BLOCK
 
-$posts = $link->prepare("SELECT * FROM $_POST[class] ORDER BY `date` DESC");
+$posts = $link->prepare("SELECT * FROM `comments-$_POST[class]` ORDER BY `date` DESC");
 if($posts->execute() == false) {
-	header('HTTP/1.0 500 Database Error');
+	header('HTTP/1.0 500 Database Error (Comment)');
 	exit;
 }
 
@@ -42,16 +42,20 @@ while($data = $posts->fetch(PDO::FETCH_ASSOC)) {
 	
 	$tmp_date1 = explode(" ", $data['date']);
 	$tmp_date = explode("-", $tmp_date1[0]);
-	
 	$date = $tmp_date[2] . '/' . $tmp_date[1] . '/' . $tmp_date[0] . " - " . $tmp_date1[1];
 	
-	$text['title'] = $data['title'];
-	$text['content'] = $data['content'];
+	$text = $data['content'];
+	
+	//author details
 	$author['name'] = getUserInfo("name", $data['author_id'], $link, "id");
+	//if the author doesn't exist, skip the comment
+	if($author['name'] == null)
+		continue;
 	$author['id'] = $data['author_id'];
+	
 	$isOwner = (getUserInfo("id", $_POST['session'], $link) == $data['author_id'] || getUserInfo("role", $_POST['session'], $link) == "administrator") ? true : false;
 
-	$return[] = ["id" => $id, "date" => $date, "text" => $text, "author" => $author, "isOwner" => $isOwner];
+	$return[] = ["id" => $id, "parent_id" => $data['parent_id'], "date" => $date, "text" => $text, "author" => $author, "isOwner" => $isOwner];
  
 };
 
