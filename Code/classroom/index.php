@@ -52,8 +52,12 @@ $can_write = getClassInfo("can_students_post", $class, $link) == 1 && getClassIn
 	<script src="../js/menu.js" defer></script>
 	<script src="../js/getPost.js"></script>
 	<script src="../js/getComment.js"></script>
-	<script src="../js/deletePost.js" async></script>
-	<?php if($can_write) echo '<script src="../js/writePost.js" async></script>' . PHP_EOL . '<script src="../js/writeComment.js" async></script>'; ?>
+	<?php if($can_write){?>
+		<script src="../js/writePost.js" async></script>
+		<script src="../js/writeComment.js" async></script>
+		<script src="../js/deletePost.js" async></script>
+		<script src="../js/deleteComment.js" async></script>
+	<?php } ?>
 	
 	<script>
 		window.s_id = '<?php echo session_id(); ?>'; /*session id*/

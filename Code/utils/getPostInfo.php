@@ -1,7 +1,7 @@
 <?php
 	function getPostInfo( $what, $class, $id, $link ) {
 		
-		$whitelist = array('title', 'content', 'date', 'author');
+		$whitelist = array('title', 'content', 'date', 'author_id');
 
 		if(array_search($what, $whitelist) === false)
 			return false;
