@@ -410,6 +410,132 @@ jobs:
           command: cd Code/utils/api && echo 'session=0&class=class1' | REQUEST_METHOD=POST  SCRIPT_FILENAME=getPost.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
           name: Running getPost page
           
+#Comments Section#
+
+  getComment:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
+          name: Installing MySQL
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
+            FILE=Code/db.config.php
+            if [ -f "$FILE" ]; then
+               echo "$FILE exist"
+            else
+                echo "$FILE not exist"
+                exit 1
+            fi
+            
+      #testing getPost.php
+      - run:
+          command: cd Code/utils/api && echo 'session=0&class=class1' | REQUEST_METHOD=POST  SCRIPT_FILENAME=getComment.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
+          name: Running getComment page
+  addComment:
+    docker:
+      - image: circleci/php:7.3.5
+      - image: circleci/mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_DATABASE: studentoa
+            MYSQL_USER: user
+            MYSQL_PASSWORD: passw0rd
+
+    working_directory: ~/project/
+    steps:
+      - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo MySQL is ready! && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Upgrading System
+          command: sudo apt-get update
+      - run:
+          name: Installing MySQL
+          command: sudo apt-get install mysql-client
+      - run:
+          name: Installing PHP driver
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Setting Up MySQL
+          command: |
+            echo "Now import data: " & mysql -h 127.0.0.1 -u root studentoa < Code/admin/builder.sql
+            echo "Now create database config: " && mv Code/admin/template.db.config.php Code/db.config.php
+            FILE=Code/db.config.php
+            if [ -f "$FILE" ]; then
+               echo "$FILE exist"
+            else
+                echo "$FILE not exist"
+                exit 1
+            fi
+            
+      #testing addComment.php
+      - run:
+          command: cd Code/utils/api && echo 'session=0&text=Example&class=class1&parent_id=0' | REQUEST_METHOD=POST  SCRIPT_FILENAME=addComment.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
+          name: Running addComment page
+  getCommentInfo:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing getCommentInfo.php
+      - run:
+          command: cd Code/utils/ && php getCommentInfo.php
+          name: Running getCommentInfo page
+  manageComment:
+    docker:
+      - image: circleci/php:7.3.5
+    working_directory: ~/project/
+    steps:
+      - checkout
+      #testing manageComment.php
+      - run:
+          command: cd Code/utils/ && php manageComment.php
+          name: Running manageComment page
 workflows:
   version: 2
   home_and_class:
@@ -426,19 +552,37 @@ workflows:
       - load_sql
   api:
     jobs:
-      - managePost
       - getUserInfo
       - getPostInfo
+      - getCommentInfo
       - getClassInfo
-      - addPost:
+      - manageComment:
           requires:
-            - managePost
             - getUserInfo
             - getPostInfo
             - getClassInfo
+            - getCommentInfo
+      - managePost:
+          requires:
+            - manageComment
+            - getUserInfo
+            - getPostInfo
+            - getClassInfo
+      - addPost:
+          requires:
+            - managePost
+      - addComment:
+          requires:
+            - manageComment
       - deletePost:
           requires:
             - managePost
+      - getPost:
+          requires:
             - getUserInfo
             - getPostInfo
-      - getPost
+      - getComment:
+          requires:
+            - getUserInfo
+            - getPostInfo
+            - getCommentInfo
