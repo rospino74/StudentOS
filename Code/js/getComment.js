@@ -57,15 +57,6 @@ const getComment = ( classroom, session ) => {
 			comment.classList.add("comment");
 			comment.id = "comment-" + elem.id;
 			
-			/*if( elem.isOwner ) {
-				comment.innerHTML = `<nav class="menu">
-									<button class="fas fa-ellipsis-v menu-btn" onclick="showMenu( this.parentElement )"></button>
-									<div class="menu-content">
-										<a href="#" onclick="removePost(this.parentElement.parentElement.parentElement, s_id, c_id)">Delete</a>
-									</div>
-								</nav>`;
-			}*/
-			
 		comment.innerHTML += `
 						<h3 class="author">
 							${elem.author.name}
@@ -76,6 +67,20 @@ const getComment = ( classroom, session ) => {
 						<p class="content">
 							${elem.text}
 						</p>`;
+						
+			//if the user is owner a menu will appear
+			if( elem.isOwner ) {
+				let menu = document.createElement("nav");
+				menu.classList.add("menu");
+				
+				menu.innerHTML = `<button class="fas fa-ellipsis-h menu-btn" onclick="showMenu( this.parentElement )"></button>
+									<div class="menu-content">
+										<a href="#" onclick="removeComment(this.parentElement.parentElement.parentElement, s_id, c_id)">Delete</a>
+									</div>`;
+
+				//appending the menu after the date
+				comment.insertBefore(menu, comment.querySelector(".content"));				
+			}						
 
 			container.appendChild( comment );
 			
