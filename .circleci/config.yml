@@ -552,29 +552,38 @@ workflows:
       - load_sql
   api:
     jobs:
-      - managePost
-      - manageComment
       - getUserInfo
       - getPostInfo
       - getCommentInfo
       - getClassInfo
-      - addPost:
-          requires:
-            - managePost
+      - manageComment:
+        requires:
             - getUserInfo
             - getPostInfo
             - getClassInfo
-      - addComment:
+            - getCommentInfo
+      - managePost:
           requires:
             - manageComment
             - getUserInfo
             - getPostInfo
             - getClassInfo
+      - addPost:
+          requires:
+            - managePost
+      - addComment:
+          requires:
+            - manageComment
       - deletePost:
           requires:
             - managePost
             - manageComment
+      - getPost:
+          requires:
             - getUserInfo
             - getPostInfo
-      - getPost
-      - getComment
+      - getComment:
+          requires:
+            - getUserInfo
+            - getPostInfo
+            - getCommentInfo
