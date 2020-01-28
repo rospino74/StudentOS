@@ -104,7 +104,7 @@ jobs:
             
       #testing check.php
       - run:
-          command: cd Code && php check.php
+          command: cd Code && php-cgi -f check.php user=Administrator&pw=Administrator
           name: Running login page
 
   classroom:
