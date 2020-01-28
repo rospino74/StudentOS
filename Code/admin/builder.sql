@@ -41,7 +41,10 @@ CREATE TABLE `comments-class1` (
   `parent_id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
   `content` blob NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `id` (`id`),
+	KEY `id_2` (`id`)
 ) COMMENT='Comments for class1';
 
 /*Admin record*/
