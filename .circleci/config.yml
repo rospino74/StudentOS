@@ -516,7 +516,7 @@ jobs:
       - run:
           command: cd Code/utils/api && echo 'session=0&text=Example&class=class1&parent_id=0' | REQUEST_METHOD=POST  SCRIPT_FILENAME=addComment.php REDIRECT_STATUS=CGI CONTENT_TYPE=application/www-form-urlencoded php-cgi
           name: Running addComment page
-  getPostInfo:
+  getCommentInfo:
     docker:
       - image: circleci/php:7.3.5
     working_directory: ~/project/
@@ -557,7 +557,7 @@ workflows:
       - getCommentInfo
       - getClassInfo
       - manageComment:
-        requires:
+          requires:
             - getUserInfo
             - getPostInfo
             - getClassInfo
