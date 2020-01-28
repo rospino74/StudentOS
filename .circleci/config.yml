@@ -577,7 +577,6 @@ workflows:
       - deletePost:
           requires:
             - managePost
-            - manageComment
       - getPost:
           requires:
             - getUserInfo
