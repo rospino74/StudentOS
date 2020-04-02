@@ -26,16 +26,16 @@ a:not(.navbar-item) {
 	color: #33cc33;
 	text-decoration: none;
 	border: none;
-	border-bottom: 3.5px #33cc33 dotted;
+	text-decoration: underline dotted #3c3;
 	padding: 2px;
 }
 a:visited:not(.navbar-item) {
 	color: #99ff99;
-	border-bottom-color:#99ff99;
+	text-decoration-color: #9f9;
 }
 a:hover:not(.navbar-item) {
 	color: #22aa22;
-	border-bottom-color: #22aa22;
+	text-decoration-color: #2a2;
 }
 
 /*Other style*/
