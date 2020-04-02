@@ -1,0 +1,72 @@
+html {
+    overflow-x: hidden
+}
+
+.snackalert .container {
+    height: 50vh;
+    width: 40vw;
+    position: fixed;
+    top: 0;
+    left: 0
+}
+
+.snackalert .snackbar {
+    display: inline-flex;
+    width: 25vw;
+    height: 30px;
+    justify-content: space-between;
+    vertical-align: baseline;
+    padding: 8px;
+    background: #012e;
+    border-radius: 5px;
+    color: #fffd;
+	font-family: 'Roboto';
+    position: fixed;
+    bottom: 25px;
+    transform: translate(-30vw, 0);
+    transition: transform .2s cubic-bezier(0,0,1,1.2);
+	box-shadow: 0px 4px 12px #5555;
+}
+
+.snackalert .snackbar .message {
+    padding: 5px;
+    margin: 0
+}
+
+.snackalert .snackbar .action {
+    color: #06d;
+    background: 0 0;
+    margin: 0;
+    padding: 5px;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 20%;
+    z-index: 1
+}
+
+.snackalert .snackbar .action::before {
+    content: "";
+    background: #fff4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    border-radius: 5px;
+    display: inline-block;
+    transition: .1s
+}
+
+.snackalert .snackbar .action:hover::before {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transform: scale(1);
+    opacity: .5
+}
+
+.snackalert .snackbar[data-snackalert-show=true] {
+    transform: translate(25px, 0);
+}

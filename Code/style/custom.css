@@ -1,0 +1,11 @@
+.snackalert .snackbar {
+	z-index: 1;
+	background: #fff;
+	color: #000d;
+}
+.snackalert .snackbar .action {
+	color: #33cc33;
+}
+.snackalert .snackbar .action::before {
+	background: #0002;
+}
