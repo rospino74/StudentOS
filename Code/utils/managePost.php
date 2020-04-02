@@ -5,6 +5,9 @@
 		$text = $data['text'];
 		$author_id = $data['author_id'];
 		
+		require_once("markdownParser.php");
+		$text = parseMarkdown($text);
+		
 		$sql = "INSERT INTO `$class` (`id`, `date`, `title`, `content`, `ip`,`author_id`) VALUES (". rand() .", NOW(), :title, :text, '".$_SERVER['REMOTE_ADDR']."',:author_id)";
 	
 		$query = $link->prepare( $sql );
@@ -14,7 +17,6 @@
 				throw new PDOException("Database error: " . json_encode($query->errorInfo()));
 		}
 		catch (PDOException $e) {
-			echo 'Execution failed: ' . $e->getMessage();
 			return false;
 		}
 			return true;
@@ -32,7 +34,6 @@
 				throw new PDOException("Database error: " . json_encode($query->errorInfo()));
 		}
 		catch (PDOException $e) {
-			#echo 'Execution failed: ' . $e->getMessage();
 			return false;
 		}
 			return true;
