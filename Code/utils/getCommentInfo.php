@@ -1,5 +1,5 @@
 <?php
-	function getPostInfo( $what, $class, $id, $link ) {
+	function getCommentInfo( $what, $class, $id, $link ) {
 		
 		$whitelist = array('author_id', 'content', 'date', 'parent_id');
 

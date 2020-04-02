@@ -1,9 +1,6 @@
 const removeComment = ( elem, session, classroom ) => {
-	let container = elem.parentElement;
 	let id = elem.getAttribute("id").slice( 8 );
-	let parent_id = container.parentElement.getAttribute("id").slice( 5 );
-	
-	container.removeChild( elem );
+	let parent_id = elem.parentElement.parentElement.getAttribute("id").slice( 5 );
 	
 	let loader = new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -13,7 +10,13 @@ const removeComment = ( elem, session, classroom ) => {
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("session=" + session + "&id=" + id + "&parent_id=" + parent_id + "&class=" + classroom);
 		
-		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onload = () => {
+			if(xhr.status == 200){
+					resolve(xhr.responseText);
+			} else {
+					reject(xhr.responseText);
+			}
+		};
 		xhr.onerror = () => reject(xhr.statusText);
 	});
 	
@@ -22,5 +25,15 @@ const removeComment = ( elem, session, classroom ) => {
 	});
 	loader.catch((r) => {
 		console.error(r);
+		
+		//showing a message
+		SnackAlert.make({
+			message: "Unable to delete",
+			showAction: true, 
+			actionMessage: "Retry",
+			actionCallback: () => {
+				removeComment(elem, session, classroom);
+			}
+		});
 	});
 }

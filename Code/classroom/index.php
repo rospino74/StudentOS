@@ -33,23 +33,31 @@ $can_write = getClassInfo("can_students_post", $class, $link) == 1 && getClassIn
 	<link href="../rsc/icon.png"       rel="icon" sizes="128x128" />
 	
 	<link href='../style/style.css'		 rel='stylesheet'>
+	<link href='../style/SnackAlert.css' rel='stylesheet'>
+	<link href='../style/custom.css'		 rel='stylesheet'>
 	<?php if($can_write) echo "<link href='../style/writeWindow.css'  rel='stylesheet'>"; ?>
 	<!--link href='../style/alert.css'   rel='stylesheet'-->
 </head>
 <body>
-	<script src="../js/navbar.js"></script>
 	<nav class="navbar">
 		<a href="../" class="navbar-item navbar-icon" data-action="home" rel="home"><img src="../rsc/icon-hires.png" alt="Student"/></a>
 		<a href="javascript:window.scrollTo(0,0);" class="navbar-item">Last post</a>
-		<?php if($can_write) echo '<a href="javascript:openWriteWindow(s_id, c_id);" class="navbar-item">Write Post</a>'; ?>
+		<?php if($can_write) echo '<a href="javascript:openWriteWindow(settings.s_id, settings.c_id);" class="navbar-item">Write Post</a>'; ?>
 		<a style="float:right;" class="navbar-item" data-action="quit">Sign Out <i class="fas fa-sign-out-alt"></i></a>
 	</nav>
+	<script src="../js/navbar.js"></script>
 	
 	<h1 style="color: #33cc33; font-family: Architects Daughter; margin-top: 8%; text-align: center;">Last post for <?php echo strtoupper($_GET['class']); ?></h1>
 	<section class="posts"></section>
 	
-	<!--posts manager-->
-	<script src="../js/menu.js" defer></script>
+	<!-- alerts manager -->
+	<script src="../js/SnackAlert.js"></script>
+	<script>
+		SnackAlert.init();
+	</script>
+	
+	<!--posts and comments manager-->
+	<script src="../js/menu.js" async></script>
 	<script src="../js/getPost.js"></script>
 	<script src="../js/getComment.js"></script>
 	<?php if($can_write){?>
@@ -60,15 +68,16 @@ $can_write = getClassInfo("can_students_post", $class, $link) == 1 && getClassIn
 	<?php } ?>
 	
 	<script>
-		window.s_id = '<?php echo session_id(); ?>'; /*session id*/
-		window.c_id = '<?php echo $class; ?>'; /*classroom*/
+		window.settings = {
+			can_write: <?php echo ($can_write) ? "true" : "false"; ?>,
+			s_id: '<?php echo session_id(); ?>', /*session id*/
+			c_id: '<?php echo $class; ?>' /*classroom*/
+		};
 		
-		getPost(c_id, s_id);
-		getComment(c_id, s_id);
+		getPost(settings.c_id, settings.s_id);
 		
 		setInterval( () => {
-			getPost(c_id, s_id);
-			getComment(c_id, s_id);
+			getPost(settings.c_id, settings.s_id);
 		}, 60000);
 	</script>
 </body>

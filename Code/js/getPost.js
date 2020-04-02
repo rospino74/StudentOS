@@ -11,7 +11,13 @@ async function getPost( classroom, session ) {
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("class=" + classroom + "&session=" + session);
 		
-		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onload = () => {
+			if(xhr.status == 200){
+					resolve(xhr.responseText);
+			} else {
+					reject(xhr.responseText);
+			}
+		};
 		xhr.onerror = () => reject(xhr.statusText);
 	});
 	
@@ -38,7 +44,7 @@ async function getPost( classroom, session ) {
 				//adding the button to the menu
 				menu.appendChild(btn);
 				menu.innerHTML += `<div class="menu-content">
-										<a href="#" onclick="removePost(this.parentElement.parentElement.parentElement, s_id, c_id)">Delete</a>
+										<a onclick="removePost(this.parentElement.parentElement.parentElement, settings.s_id, settings.c_id)">Delete</a>
 									</div>`;
 									
 				//appending the menu to the post
@@ -67,11 +73,24 @@ async function getPost( classroom, session ) {
 			container.appendChild( post );
 			
 		});
+		
+		getComment(classroom, session);
+		
 		out = true;
 	});
 	loader.catch((e) => {
 		console.error("Post error: " + e);
 		out = false;
+		
+		//showing a message
+		SnackAlert.make({
+			message: "Unable to load posts",
+			showAction: true, 
+			actionMessage: "Retry",
+			actionCallback: () => {
+				getPost( session, classroom );
+			}
+		});
 	});
 	
 	return out;

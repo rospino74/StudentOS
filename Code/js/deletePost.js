@@ -1,30 +1,5 @@
-function showDeleteButtons( session, classroom ) {
-	var container = document.querySelector("section.posts");
-	
-	container.childNodes.forEach( ( elem ) => {
-		var btn = document.createElement("button");
-		btn.classList = "btn-remove-post fas fa-times";
-		btn.addEventListener("click", () => {
-			hideDeleteButtons();
-			removePost( elem, session, classroom );
-		});
-	
-		elem.appendChild( btn );
-	});
-}
-function hideDeleteButtons() {
-	var buttons = document.querySelectorAll("button.btn-remove-post");
-	
-	buttons.forEach( ( elem ) => {
-		elem.parentElement.removeChild( elem );
-	});
-}
-
-function removePost( elem, session, classroom ) {
-	var container = document.querySelector("section.posts");
-	var id = elem.getAttribute("id").slice( 5 );
-	
-	container.removeChild( elem );
+const removePost = ( elem, session, classroom ) => {
+	let id = elem.getAttribute("id").slice( 5 );
 	
 	var loader = new Promise((resolve, reject) => {
 		const xhr = new XMLHttpRequest();
@@ -34,12 +9,32 @@ function removePost( elem, session, classroom ) {
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("session=" + session + "&id=" + id + "&class=" + classroom);
 		
-		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onload = () => {
+			if(xhr.status == 200){
+					resolve(xhr.responseText);
+			} else {
+					reject(xhr.responseText);
+			}
+		};
 		xhr.onerror = () => reject(xhr.statusText);
 	});
 	
 	loader.then(( result ) => {
 		getPost( classroom, session );
 		getComment( classroom, session );
+	});
+	
+	loader.catch((result) =>{
+		console.error(result);
+		
+		//showing a message
+		SnackAlert.make({
+			message: "Unable to delete",
+			showAction: true, 
+			actionMessage: "Retry",
+			actionCallback: () => {
+				removePost(elem, session, classroom);
+			}
+		});
 	});
 }

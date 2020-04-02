@@ -8,8 +8,7 @@ const openCommentWindow = ( session, classroom, parentPost ) => {
 	
 	//getting the post id
 	let parent_id = parentPost.getAttribute("id").slice( 5 );
-
-	let body = document.body;
+	
 	let container = document.createElement("div");
 	
 	container.classList.add("write-container");
@@ -18,19 +17,20 @@ const openCommentWindow = ( session, classroom, parentPost ) => {
 		<h1>Write a Comment</h1>
         <label for="text">Text</label><br />
         <textarea id="text" placeholder="Write the comment here..."></textarea><br />
-        <button name="send" class="btn-positive" onclick="writeComment( '${session}', '${classroom}', ${parent_id} );"><i class="fas fa-sticky-note"></i> Post</button><button onclick="closeWriteWindow();" class="btn-negative"><i class="fas fa-ban"></i> Close</button>
+        <button name="send" class="btn-positive" onclick="writeComment( '${session}', '${classroom}', ${parent_id} ); hideWriteWindow();"><i class="fas fa-sticky-note"></i> Post</button><button onclick="closeWriteWindow();" class="btn-negative"><i class="fas fa-ban"></i> Close</button>
 	</div>`;
 	
 	//adding event to the textarea
 	container.addEventListener("keypress", (e) => {
-		if(e.ctrlKey || e.charCode == 13) {
+		if(e.ctrlKey && e.charCode == 13) {
 			writeComment( session, classroom, parent_id);
+			hideWriteWindow();
 		} else {
 			return;
 		}
 	});
 	
-	body.insertBefore(container, body.firstChild);
+	document.body.insertBefore(container, document.body.firstChild);
 }
 
 const writeComment = ( session, classroom, parent_id ) => {
@@ -45,7 +45,13 @@ const writeComment = ( session, classroom, parent_id ) => {
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("text=" + encodeURI(text.value) + "&parent_id=" + parent_id + "&class=" + classroom + "&session=" + session);
 		
-		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onload = () => {
+			if(xhr.status == 201){
+					resolve(xhr.responseText);
+			} else {
+					reject(xhr.responseText);
+			}
+		};
 		xhr.onerror = () => reject(xhr.statusText);
 	});
 	
@@ -53,5 +59,19 @@ const writeComment = ( session, classroom, parent_id ) => {
 		closeWriteWindow();
 		getPost( classroom, session );
 		getComment( classroom, session );
+	});
+	
+	uploader.catch((result) =>{
+		console.error(result);
+		
+		//showing a message
+		SnackAlert.make({
+			message: "Unable to comment",
+			showAction: true, 
+			actionMessage: "Retry",
+			actionCallback: () => {
+				writeComment( session, classroom, parent_id );
+			}
+		});
 	});
 }

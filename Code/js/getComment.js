@@ -7,7 +7,7 @@ const clearComments = () => {
 		//building the infobox
 		let empty = document.createElement("p");
 		empty.classList.add("empty");
-		empty.innerHTML = 'No Comments Here! <a onclick="openCommentWindow(s_id, c_id, this.parentElement.parentElement.parentElement);">Write</a> a new one';
+		empty.innerHTML = 'No Comments Here! <a onclick="openCommentWindow(settings.s_id, settings.c_id, this.parentElement.parentElement.parentElement);">Write</a> a new one';
 		elem.appendChild( empty );
 	});
 }
@@ -23,7 +23,13 @@ const getComment = ( classroom, session ) => {
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send("class=" + classroom + "&session=" + session);
 		
-		xhr.onload = () => resolve(xhr.responseText);
+		xhr.onload = () => {
+			if(xhr.status == 200){
+					resolve(xhr.responseText);
+			} else {
+					reject(xhr.responseText);
+			}
+		};
 		xhr.onerror = () => reject(xhr.statusText);
 	});
 	
@@ -42,11 +48,11 @@ const getComment = ( classroom, session ) => {
 				container.removeChild( box );
 			
 			//adding the button to write a new comment if it doesn't exist
-			if(container.querySelector("a.add-comment") == undefined) {
+			if(container.querySelector("a.add-comment") == undefined && settings.can_write) {
 				let writeBtn = document.createElement("a");
 				writeBtn.classList.add("add-comment");
 				writeBtn.addEventListener("click", () => {
-					openCommentWindow(window.s_id, window.c_id, container.parentElement);
+					openCommentWindow(window.settings.s_id, window.settings.c_id, container.parentElement);
 				});
 				writeBtn.innerHTML = `<i class="fas fa-plus"></i> Add a Comment`;
 				container.insertBefore( writeBtn, container.firstChild);
@@ -75,7 +81,7 @@ const getComment = ( classroom, session ) => {
 				
 				menu.innerHTML = `<button class="fas fa-ellipsis-h menu-btn" onclick="showMenu( this.parentElement )"></button>
 									<div class="menu-content">
-										<a href="#" onclick="removeComment(this.parentElement.parentElement.parentElement, s_id, c_id)">Delete</a>
+										<a onclick="removeComment(this.parentElement.parentElement.parentElement, settings.s_id, settings.c_id)">Delete</a>
 									</div>`;
 
 				//appending the menu after the date
@@ -86,9 +92,20 @@ const getComment = ( classroom, session ) => {
 			
 		});
 		out = true;
-	}).catch(( e ) => {
+	});
+	loader.catch(( e ) => {
 		console.error("Comment error: " + e);		
 		out = false;
+		
+		//showing a message
+		SnackAlert.make({
+			message: "Unable to load comments",
+			showAction: true, 
+			actionMessage: "Retry",
+			actionCallback: () => {
+				getComment( session, classroom );
+			}
+		});
 	});
 	
 	return out;

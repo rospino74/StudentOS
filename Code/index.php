@@ -86,7 +86,7 @@ $theme_color="#53e300"; //default: #53e300
 	</style>
 </head>
 <body>
-	<div class="navbar">
+	<nav class="navbar">
 		<a href="#" class="navbar-item navbar-icon" rel="home"><img src="rsc/icon-hires.png" alt="Student"/></a>
 		
 		<?php
@@ -94,7 +94,8 @@ $theme_color="#53e300"; //default: #53e300
 		?>
 		
 		<a style="float:right;" class="navbar-item" href="check.php?action=logout">Sign Out <i class="fas fa-sign-out-alt"></i></a>
-	</div>
+	</nav>
+<script src="js/navbar.js"></script>
 <div id="1" style="text-align: center;">
     <h2 style="color: <?php echo $color;?>;" class="Student-font">Welcome Back<?php echo isset($name) ? ", $name" : "";?>!</h2>
     <p>Select the classroom</p>
@@ -115,7 +116,6 @@ $theme_color="#53e300"; //default: #53e300
 		
     </select>
 </div>
-<script src="js/navbar.js"></script>
 <script>
     let spinner = document.querySelector("#pagina");
     spinner.addEventListener("change", (e) => {
