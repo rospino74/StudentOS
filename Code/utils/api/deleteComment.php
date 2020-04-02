@@ -30,12 +30,14 @@
 	require_once("../getUserInfo.php");
 	require_once("../getClassInfo.php");
 	require_once("../getPostInfo.php");
+	require_once("../getCommentInfo.php");
 	
 	$name = getUserInfo("id", $session, $link);
 	$role = getUserInfo("role", $session, $link);
 	$author = getPostInfo("author_id", $class, $parent_id, $link);
+	$comment_author = getCommentInfo("author_id", $class, $id, $link);
 	
-	if($name != $author && $role != "administrator" && $role != "teacher") {
+	if($name != $author && $role != "administrator" && !($role == "teacher" && getUserInfo("role", $comment_author, $link, "id") == "student")) {
 		header('HTTP/1.1 403 Forbidden');
 		echo '{"Error":true, "Detail":"Not enough permissions"}';
 		exit;

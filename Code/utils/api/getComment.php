@@ -53,7 +53,7 @@ while($data = $posts->fetch(PDO::FETCH_ASSOC)) {
 		continue;
 	$author['id'] = $data['author_id'];
 	
-	$isOwner = (getUserInfo("id", $_POST['session'], $link) == $data['author_id'] || getUserInfo("role", $_POST['session'], $link) == "administrator") ? true : false;
+	$isOwner = (getUserInfo("id", $_POST['session'], $link) == $data['author_id'] || getUserInfo("role", $_POST['session'], $link) == "administrator" || (getUserInfo("role", $_POST['session'], $link) == "teacher" && getUserInfo("role", $data['author_id'], $link, "id") == "student") ) ? true : false;
 
 	$return[] = ["id" => $id, "parent_id" => $data['parent_id'], "date" => $date, "text" => $text, "author" => $author, "isOwner" => $isOwner];
  
