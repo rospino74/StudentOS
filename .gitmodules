@@ -1,0 +1,3 @@
+[submodule "Code/Server/Server"]
+	path = Code/Server
+	url = https://github.com/rospino74/StudentOS-Server
