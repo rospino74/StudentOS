@@ -1,5 +1,3 @@
 #ignore database settings
 Code/db.config.php
 Code/.htaccess
-#ignore basic rewrite system
-index.php
