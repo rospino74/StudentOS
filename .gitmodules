@@ -1,3 +1,6 @@
 [submodule "Code/Server"]
 	path = Code/Server
 	url = https://github.com/rospino74/StudentOS-Server
+[submodule "Code/Client"]
+	path = Code/Client
+	url = https://github.com/rospino74/StudentOS-Client.git
